@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
@@ -13,11 +14,13 @@ import com.yellow5a5.crashanalysis.R;
  * Created by Yellow5A5 on 17/4/15.
  */
 
-public class CrashDisplayDialog extends Dialog {
+public class CrashInfoDialog extends Dialog {
 
     private TextView mCrashContentTv;
+    private Button mLeftBtn;
+    private Button mRightBtn;
 
-    public CrashDisplayDialog(Context context) {
+    public CrashInfoDialog(Context context) {
         super(context);
     }
 
@@ -33,7 +36,11 @@ public class CrashDisplayDialog extends Dialog {
         mCrashContentTv.setVisibility(View.GONE);
     }
 
-    public void setCrashContent(String content){
-        mCrashContentTv.setText(content);
+    public void setCrashContent(String text){
+        mLeftBtn.setText(text);
+    }
+
+    public void setLeftBtnText(String text){
+        mRightBtn.setText(text);
     }
 }

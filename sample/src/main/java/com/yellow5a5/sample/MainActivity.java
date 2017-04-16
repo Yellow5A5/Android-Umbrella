@@ -1,22 +1,16 @@
 package com.yellow5a5.sample;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.ApplicationErrorReport;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Process;
-import android.support.annotation.MainThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.yellow5a5.crashanalysis.View.CrashDisplayDialog;
+import com.yellow5a5.crashanalysis.CrashInfoHelper;
+import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Looper.prepare();
-                        CrashDisplayDialog dialog = new CrashDisplayDialog();
-
+                        CrashInfoDialog dialog = new CrashInfoDialog(MainActivity.this);
+                        dialog.setCrashContent(CrashInfoHelper.convertStackTrace(e.getStackTrace()));
                         dialog.show();
 
                         Looper.loop();

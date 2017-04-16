@@ -2,9 +2,8 @@ package com.yellow5a5.crashanalysis;
 
 import android.app.Activity;
 import android.os.Looper;
-import android.widget.Toast;
 
-import com.yellow5a5.crashanalysis.View.CrashDisplayDialog;
+import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
 
 import java.util.LinkedList;
 
@@ -39,31 +38,61 @@ public class CrashAnalysis implements Thread.UncaughtExceptionHandler {
         mActvityList.remove(act);
     }
 
+
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
+    public void uncaughtException(Thread t, final Throwable e) {
         if (mDefaultHandler != null){
             mDefaultHandler.uncaughtException(t,e);
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                //TODO 存储Crash信息。
-
-
-                if (mActvityList.getLast() == null){
-                    return;
-                }
-                CrashDisplayDialog dialog = new CrashDisplayDialog(mActvityList.getLast());
-
-                dialog.show();
-
-                Looper.loop();
-            }
-        }).start();
 
     }
 
 
+
+    public static class CrashThread extends Thread{
+
+        private Activity mActivity;
+        private String mCrashContent;
+        private CrashListener mCrashListener;
+
+        public interface CrashListener{
+            void onCallBack();
+        }
+
+        public void setCrashListener(CrashListener l){
+            mCrashListener = l;
+        }
+
+
+        public CrashThread(Activity act){
+            mActivity = act;
+        }
+
+        public void setCrashContent(String content){
+            mCrashContent = content;
+        }
+
+        @Override
+        public void run() {
+            Looper.prepare();
+
+            CrashInfoHelper.saveInfoLocal();//TODO 要回调保存成功出来。
+            //展示Crash窗
+            showCrashDialog(mCrashContent);
+            if (mCrashListener != null){
+                mCrashListener.onCallBack();
+            }
+            super.run();
+            Looper.loop();
+        }
+
+        private void showCrashDialog(String content) {
+            if (mActivity != null){
+                CrashInfoDialog dialog = new CrashInfoDialog(mActivity);
+                dialog.setCrashContent(content);
+                dialog.show();
+            }
+        }
+    }
 
 }
