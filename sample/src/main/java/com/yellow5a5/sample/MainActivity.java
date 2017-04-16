@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 throw new ArrayIndexOutOfBoundsException();
 //                CrashInfoDialog dialog = new CrashInfoDialog.Builder(MainActivity.this)
-//                        .setCrashContent("TSUSUSUUSUASKDSADLASJDLSDA")
+//                        .setCrashException("TSUSUSUUSUASKDSADLASJDLSDA")
 //                        .build();
 //                dialog.show();
             }

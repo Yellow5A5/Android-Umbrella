@@ -1,43 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-
-        <Button
-            android:id="@+id/dialog_crash_save_btn"
-            android:text="@string/dialog_crash_btn_saving_text"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/dialog_crash_share_btn"
-            android:text="@string/dialog_crash_btn_share_text"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
-
-    </LinearLayout>
 
     <ScrollView
-
+        android:id="@+id/dialog_crash_scroll_v"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="400dp">
 
-        <TextView
+        <com.yellow5a5.crashanalysis.View.JustifyTextView
             android:id="@+id/dialo_crash_content_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </ScrollView>
 
+    <RelativeLayout
+        android:id="@+id/dialog_crash_bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/dialog_crash_scroll_v">
 
+        <View
+            android:id="@+id/dialog_crash_bottom_flag"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/dialog_crash_save_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/dialog_crash_bottom_flag"
+            android:layout_weight="1"
+            android:background="#9983D0F0"
+            android:text="@string/dialog_crash_btn_saving_text"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/dialog_crash_share_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/dialog_crash_bottom_flag"
+            android:background="#9983D0F0"
+            android:text="@string/dialog_crash_btn_share_text"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/dialog_crash_close_iv"
+        android:layout_width="42dp"
+        android:layout_height="53dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:padding="5dp"
+        android:src="@drawable/dialog_crash_close_image" />
 
 </RelativeLayout>

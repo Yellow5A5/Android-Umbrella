@@ -54,12 +54,27 @@ public class CrashInfoHelper {
     public static final String CRASH_CONTENT_BOTTOM_INTERVAL = "======================>>";
     public static final String CRASH_CONTENT_SPACE_LEFT_INTERVAL = "   |  ";
     public static final String CRASH_CONTENT_SPACE_RIGHT_INTERVAL = "   |  ";
-    public static String convertStackTrace(StackTraceElement[] list){
+    public static final String CRASH_CONTENT_ITEM_INTERVAL = "——————————————————————————————————————————————————————————————";
+
+    public static String convertStackTraceToShow(StackTraceElement[] list){
         if (list == null){
             return "数据栈为空。";
         }
         StringBuilder builder = new StringBuilder();
-        String currentTime = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+        for (StackTraceElement element: list) {
+            builder.append(element.toString());
+            builder.append("\n");
+        }
+        builder.append("\n");
+        return builder.toString();
+    }
+
+    public static String convertStackTraceToSave(StackTraceElement[] list){
+        if (list == null){
+            return "数据栈为空。";
+        }
+        StringBuilder builder = new StringBuilder();
+        String currentTime = new SimpleDateFormat("yyyyMMdd_HH_mm_ss").format(Calendar.getInstance().getTime());
         builder.append(CRASH_CONTENT_TOP_INTERVAL);
         builder.append(currentTime);
         builder.append(CRASH_CONTENT_BOTTOM_INTERVAL);
@@ -67,9 +82,10 @@ public class CrashInfoHelper {
         for (StackTraceElement element: list) {
             builder.append(CRASH_CONTENT_SPACE_LEFT_INTERVAL);
             builder.append(element.toString());
-            builder.append(CRASH_CONTENT_SPACE_RIGHT_INTERVAL);
             builder.append("\n");
         }
+        builder.append(CRASH_CONTENT_ITEM_INTERVAL);
+        builder.append("\n");
         return builder.toString();
     }
 }

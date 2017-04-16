@@ -1,10 +1,7 @@
 package com.yellow5a5.crashanalysis;
 
 import android.app.Activity;
-import android.graphics.Point;
 import android.os.Looper;
-
-import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
 
 import java.util.LinkedList;
 
@@ -59,7 +56,7 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         Activity act = mActvityList.isEmpty() ? null : mActvityList.getLast();
         mBackDoorThread = new BackDoorThread(act);
         mBackDoorThread.setCrashListener(mCrashListener);
-        mBackDoorThread.setCrashContent(CrashInfoHelper.convertStackTrace(e.getStackTrace()));
+        mBackDoorThread.setCrashException(e);
         mBackDoorThread.start();
 //        if (mDefaultHandler != null) {
 //            mDefaultHandler.uncaughtException(t, e);

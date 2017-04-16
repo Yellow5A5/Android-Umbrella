@@ -13,7 +13,7 @@ import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
 class BackDoorThread extends Thread {
 
     private Activity mActivity;
-    private String mCrashContent;
+    private Throwable mCrashException;
     private CrashListener mCrashListener;
 
     void setCrashListener(CrashListener l) {
@@ -24,32 +24,34 @@ class BackDoorThread extends Thread {
         mActivity = act;
     }
 
-    public void setCrashContent(String content) {
-        mCrashContent = content;
+    public void setCrashException(Throwable throwable) {
+        mCrashException = throwable;
     }
 
     @Override
     public void run() {
-        Log.e(BackDoorThread.class.getName(), "run: 444");
         Looper.prepare();
         CrashInfoDialog dialog = null;
-        Log.e(BackDoorThread.class.getName(), "run: 255552");
+        String crashInfoShow = CrashInfoHelper.convertStackTraceToShow(mCrashException.getStackTrace());
+        crashInfoShow += crashInfoShow;
+        crashInfoShow += crashInfoShow;
+        crashInfoShow += crashInfoShow;
+        Log.e(BackDoorThread.class.getName(), "run: " + crashInfoShow);
+        String crashInfoSave = CrashInfoHelper.convertStackTraceToSave(mCrashException.getStackTrace());
+        Log.e(BackDoorThread.class.getName(), "run: " + crashInfoSave);
         if (mActivity != null) {
             dialog = new CrashInfoDialog.Builder(mActivity)
-                    .setCrashContent(mCrashContent)
+                    .setCrashContent(crashInfoShow)
                     .build();
             dialog.show();
-            Log.e(BackDoorThread.class.getName(), "run: 255552");
         }
-        Log.e(BackDoorThread.class.getName(), "run: 22");
         final CrashInfoDialog finalDialog = dialog;
-        CrashInfoHelper.saveInfoLocal(mCrashContent, new CrashInfoSaveCallBack() {
+        CrashInfoHelper.saveInfoLocal(crashInfoSave, new CrashInfoSaveCallBack() {
             @Override
             public void onSuccess() {
                 if (finalDialog != null){
                     finalDialog.setCompleteState();
                 }
-                Log.e(BackDoorThread.class.getName(), "run: 11");
             }
 
             @Override
@@ -57,7 +59,6 @@ class BackDoorThread extends Thread {
 
             }
         });
-        Log.e(BackDoorThread.class.getName(), "run: bbb");
         if (mCrashListener != null) {
             mCrashListener.onCallBack();
         }
