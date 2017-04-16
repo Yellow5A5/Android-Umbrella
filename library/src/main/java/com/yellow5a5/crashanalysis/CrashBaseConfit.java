@@ -7,5 +7,8 @@ package com.yellow5a5.crashanalysis;
 public abstract class CrashBaseConfit {
     public abstract String getLocalPath();
 
+    public abstract int onCrashInterruptCount();
+
+
 
 }

@@ -11,88 +11,60 @@ import java.util.LinkedList;
  * Created by Yellow5A5 on 17/4/15.
  */
 
-public class CrashAnalysis implements Thread.UncaughtExceptionHandler {
+public class CrashAnalysis {
+
+    private LinkedList<Activity> mActvityList = new LinkedList<>();
+    private LinkedList<CrashExceptionHandler> mExHandlerList = new LinkedList<>();
 
     private static class InstanceHolder {
         private static CrashAnalysis instance = new CrashAnalysis();
     }
+
     public static CrashAnalysis getInstance() {
         return InstanceHolder.instance;
     }
 
-    private CrashExceptionHandler mCrashHandler;
-    private Thread.UncaughtExceptionHandler mDefaultHandler;
-    private LinkedList<Activity> mActvityList = new LinkedList<>();
+    private CrashAnalysis() {
+    }
 
-    public void init(){
-        if (mCrashHandler == null){
-            Looper.getMainLooper().getThread().setUncaughtExceptionHandler(this);
+    public void setTargetToMainThread(){
+        setTarget(Looper.getMainLooper().getThread());
+    }
+    /**
+     * Exception-Listener injection for target thread.
+     * @param thread target
+     */
+    public void setTarget(Thread thread) {
+        CrashExceptionHandler exHandler = new CrashExceptionHandler(thread);
+        exHandler.setActList(mActvityList);
+        mExHandlerList.add(exHandler);
+    }
+
+    /**
+     * Clear Exception-Listener in target thread.
+     * @param thread target
+     */
+    public void removeTarget(Thread thread) {
+        Thread.UncaughtExceptionHandler exHandler = thread.getUncaughtExceptionHandler();
+        if (exHandler instanceof CrashExceptionHandler && mExHandlerList.remove(exHandler)){
+            ((CrashExceptionHandler) exHandler).destory();
         }
     }
 
-    public void registeredActivity(Activity act){
+    /**
+     * will show by target act.
+     * @param act
+     */
+    public void registeredActivity(Activity act) {
         mActvityList.add(act);
     }
 
-    public void unRegisterActivity(Activity act){
+    /**
+     * remove.
+     * @param act
+     */
+    public void unRegisterActivity(Activity act) {
         mActvityList.remove(act);
-    }
-
-
-    @Override
-    public void uncaughtException(Thread t, final Throwable e) {
-        if (mDefaultHandler != null){
-            mDefaultHandler.uncaughtException(t,e);
-        }
-
-    }
-
-
-
-    public static class CrashThread extends Thread{
-
-        private Activity mActivity;
-        private String mCrashContent;
-        private CrashListener mCrashListener;
-
-        public interface CrashListener{
-            void onCallBack();
-        }
-
-        public void setCrashListener(CrashListener l){
-            mCrashListener = l;
-        }
-
-
-        public CrashThread(Activity act){
-            mActivity = act;
-        }
-
-        public void setCrashContent(String content){
-            mCrashContent = content;
-        }
-
-        @Override
-        public void run() {
-            Looper.prepare();
-
-            CrashInfoHelper.saveInfoLocal();//TODO 要回调保存成功出来。
-            //展示Crash窗
-            showCrashDialog(mCrashContent);
-            if (mCrashListener != null){
-                mCrashListener.onCallBack();
-            }
-            super.run();
-            Looper.loop();
-        }
-
-        private void showCrashDialog(String content) {
-            if (mActivity != null){
-                CrashInfoDialog dialog = new CrashInfoDialog(mActivity);
-                dialog.setCrashContent(content);
-                dialog.show();
-            }
-        }
     }
 
 }

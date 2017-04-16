@@ -8,17 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
-        <!--<Button-->
-            <!--android:text="确定并保存到本地"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent" />-->
-
         <Button
-            android:text="分享给开发"
+            android:id="@+id/dialog_crash_save_btn"
+            android:text="@string/dialog_crash_btn_saving_text"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/dialog_crash_share_btn"
+            android:text="@string/dialog_crash_btn_share_text"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
