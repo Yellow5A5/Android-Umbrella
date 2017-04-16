@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CrashAnalysis</string>
-    <string name="dialog_crash_btn_saving_text">Crash信息保存中...</string>
-    <string name="dialog_crash_btn_share_text">分享给开发</string>
-    <string name="dialog_crash_btn_saved_text">已保存成功</string>
+    <string name="dialog_crash_btn_saving_text">The CrashInfo Saving...</string>
+    <string name="dialog_crash_btn_share_text">Share The CrashInfo</string>
+    <string name="dialog_crash_btn_saved_text">SaveLocal Succeed</string>
+    <string name="dialog_crash_btn_save_fail_text">SaveLocal Failture!</string>
+    <string name="dialog_crash_title">Crash Info</string>
 </resources>

@@ -5,36 +5,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/dialog_crash_title"
+        android:text="@string/dialog_crash_title"
+        android:gravity="center"
+        android:textSize="19sp"
+        android:textColor="#000000"
+        android:background="#11666666"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
 
     <ScrollView
+        android:layout_below="@id/dialog_crash_title"
         android:id="@+id/dialog_crash_scroll_v"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="300dp">
 
-        <com.yellow5a5.crashanalysis.View.JustifyTextView
-            android:id="@+id/dialo_crash_content_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/dialog_crash_content_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
 
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/dialog_crash_bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/dialog_crash_scroll_v">
 
-        <View
-            android:id="@+id/dialog_crash_bottom_flag"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true" />
-
         <Button
             android:id="@+id/dialog_crash_save_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/dialog_crash_bottom_flag"
+            android:layout_margin="1dp"
             android:layout_weight="1"
             android:background="#9983D0F0"
             android:text="@string/dialog_crash_btn_saving_text"
@@ -45,13 +51,14 @@
             android:id="@+id/dialog_crash_share_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/dialog_crash_bottom_flag"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
             android:background="#9983D0F0"
             android:text="@string/dialog_crash_btn_share_text"
             android:visibility="gone"
             tools:visibility="visible" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/dialog_crash_close_iv"

@@ -33,9 +33,6 @@ class BackDoorThread extends Thread {
         Looper.prepare();
         CrashInfoDialog dialog = null;
         String crashInfoShow = CrashInfoHelper.convertStackTraceToShow(mCrashException.getStackTrace());
-        crashInfoShow += crashInfoShow;
-        crashInfoShow += crashInfoShow;
-        crashInfoShow += crashInfoShow;
         Log.e(BackDoorThread.class.getName(), "run: " + crashInfoShow);
         String crashInfoSave = CrashInfoHelper.convertStackTraceToSave(mCrashException.getStackTrace());
         Log.e(BackDoorThread.class.getName(), "run: " + crashInfoSave);
@@ -51,12 +48,15 @@ class BackDoorThread extends Thread {
             public void onSuccess() {
                 if (finalDialog != null){
                     finalDialog.setCompleteState();
+                    CrashInfoDialog
                 }
             }
 
             @Override
             public void onFailture() {
-
+                if (finalDialog != null){
+                    finalDialog.setFailtureState();
+                }
             }
         });
         if (mCrashListener != null) {

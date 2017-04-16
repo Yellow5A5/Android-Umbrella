@@ -24,7 +24,8 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     CrashExceptionHandler(Thread thread) {
         mTargetThread = thread;
-        mDefaultHandler = thread.getUncaughtExceptionHandler();
+        mDefaultHandler = (thread.getUncaughtExceptionHandler() == thread.getThreadGroup()
+                ? null : thread.getUncaughtExceptionHandler());
         mTargetThread.setUncaughtExceptionHandler(this);
     }
 

@@ -3,11 +3,13 @@ package com.yellow5a5.crashanalysis.View;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yellow5a5.crashanalysis.R;
 
@@ -22,8 +24,9 @@ public class CrashInfoDialog extends Dialog {
     private Button mRightBtn;
     private ImageView mCloseV;
 
-    public interface CrashDialogCallback{
+    public interface CrashDialogCallback {
         void onSaveBtnClick();
+
         void onShareBtnClick();
     }
 
@@ -38,44 +41,65 @@ public class CrashInfoDialog extends Dialog {
 
     }
 
-    public void createViewInner(View view){
+    public void createViewInner(View view) {
         setContentView(view);
-        mCrashContentTv = (JustifyTextView) view.findViewById(R.id.dialo_crash_content_text);
+        mCrashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
         mLeftBtn = (Button) findViewById(R.id.dialog_crash_save_btn);
         mRightBtn = (Button) findViewById(R.id.dialog_crash_share_btn);
         mCloseV = (ImageView) findViewById(R.id.dialog_crash_close_iv);
-        mCloseV.setOnClickListener(new View.OnClickListener() {
+        mRightBtn.setVisibility(View.VISIBLE);
+
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (v == mLeftBtn) {
+                    //TODO
+                } else if (v == mRightBtn) {
+                    //TODO Share.
+                } else if (v == mCloseV) {
+                    //TODO Exit App.
+                }
 
             }
-        });
+        };
+
+
+        mCrashContentTv.setHorizontallyScrolling(true);
+        mCrashContentTv.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 
-    public void setCrashContent(String text){
+    public void setCrashContent(String text) {
         mCrashContentTv.setText(text);
     }
 
-    public void setSaveingState(){
+    public void setSaveingState() {
         mLeftBtn.setText("");
         mLeftBtn.setVisibility(View.GONE);
     }
 
-    public void setCompleteState(){
-        mLeftBtn.setText(R.string.dialog_crash_btn_saved_text);
-        mLeftBtn.setVisibility(View.VISIBLE);
-        mRightBtn.setVisibility(View.VISIBLE);
+    public void setCompleteState() {
+//        mLeftBtn.setText(R.string.dialog_crash_btn_saved_text);
+//        mLeftBtn.setVisibility(View.VISIBLE);
+//        mRightBtn.setVisibility(View.VISIBLE);
+        Toast.makeText(getContext(), R.string.dialog_crash_btn_saved_text, Toast.LENGTH_LONG).show();
     }
 
-    public void setLeftClickable(boolean isClickable){
+    public void setFailtureState() {
+//        mLeftBtn.setText(R.string.dialog_crash_btn_save_fail_text);
+//        mLeftBtn.setVisibility(View.VISIBLE);
+//        mRightBtn.setVisibility(View.VISIBLE);
+        Toast.makeText(getContext(), R.string.dialog_crash_btn_save_fail_text, Toast.LENGTH_LONG).show();
+    }
+
+    public void setLeftClickable(boolean isClickable) {
         mLeftBtn.setClickable(isClickable);
     }
 
-    public void setRightClickable(boolean isClickable){
+    public void setRightClickable(boolean isClickable) {
         mRightBtn.setClickable(isClickable);
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private Context context;
         private CrashInfoDialog dialog;
@@ -83,20 +107,20 @@ public class CrashInfoDialog extends Dialog {
 
         private CrashDialogCallback mCrashDialogCallback;
 
-        public void setCrashDialogCallback(CrashDialogCallback l){
+        public void setCrashDialogCallback(CrashDialogCallback l) {
             mCrashDialogCallback = l;
         }
 
-        public Builder(Context context){
+        public Builder(Context context) {
             this.context = context;
         }
 
-        public Builder setCrashContent(String content){
+        public Builder setCrashContent(String content) {
             crashContent = content;
             return this;
         }
 
-        public CrashInfoDialog build(){
+        public CrashInfoDialog build() {
             dialog = new CrashInfoDialog(context);
             dialog.setCanceledOnTouchOutside(false);
             setupView();
@@ -105,28 +129,27 @@ public class CrashInfoDialog extends Dialog {
 
         private void setupView() {
             View view = LayoutInflater.from(context).inflate(R.layout.crash_dislay_layout, null, false);
-            TextView crashContentTv = (TextView) view.findViewById(R.id.dialo_crash_content_text);
+            TextView crashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
             final Button saveBtn = (Button) view.findViewById(R.id.dialog_crash_save_btn);
             final Button shareBtn = (Button) view.findViewById(R.id.dialog_crash_share_btn);
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mCrashDialogCallback == null){
+                    if (mCrashDialogCallback == null) {
                         return;
                     }
-                    if (v == saveBtn){
+                    if (v == saveBtn) {
                         mCrashDialogCallback.onSaveBtnClick();
 
-                    } else if (v == shareBtn){
+                    } else if (v == shareBtn) {
                         mCrashDialogCallback.onShareBtnClick();
                     }
                 }
             };
-            //TODO
-            saveBtn.setOnClickListener(listener);
-            shareBtn.setOnClickListener(listener);
+//            saveBtn.setOnClickListener(listener);
+//            shareBtn.setOnClickListener(listener);
             saveBtn.setClickable(false);
-            if (crashContent != null){
+            if (crashContent != null) {
                 crashContentTv.setText(crashContent);
             }
             dialog.createViewInner(view);
