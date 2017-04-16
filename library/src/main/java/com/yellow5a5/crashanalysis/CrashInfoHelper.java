@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -27,20 +26,20 @@ public class CrashInfoHelper {
         try {
             File root = null;
             if (TextUtils.isEmpty(path)){
-                root = new File(Environment.getExternalStorageDirectory(), "LocalCrashInfo");
+                root = new File(Environment.getExternalStorageDirectory(), "localCrashInfo");
             } else {
                 root = new File(path);
             }
             if (!root.exists()) {
                 root.mkdirs();
             }
-            String currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            String currentTime = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
             File gpxfile = new File(root, currentTime + ".txt");
             FileWriter writer = new FileWriter(gpxfile);
             writer.append(content);
             writer.flush();
             writer.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             if (callback != null){
                 callback.onFailture();
             }
@@ -51,13 +50,24 @@ public class CrashInfoHelper {
         }
     }
 
+    public static final String CRASH_CONTENT_TOP_INTERVAL = "<<=======================";
+    public static final String CRASH_CONTENT_BOTTOM_INTERVAL = "======================>>";
+    public static final String CRASH_CONTENT_SPACE_LEFT_INTERVAL = "   |  ";
+    public static final String CRASH_CONTENT_SPACE_RIGHT_INTERVAL = "   |  ";
     public static String convertStackTrace(StackTraceElement[] list){
         if (list == null){
             return "数据栈为空。";
         }
         StringBuilder builder = new StringBuilder();
+        String currentTime = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+        builder.append(CRASH_CONTENT_TOP_INTERVAL);
+        builder.append(currentTime);
+        builder.append(CRASH_CONTENT_BOTTOM_INTERVAL);
+        builder.append("\n");
         for (StackTraceElement element: list) {
+            builder.append(CRASH_CONTENT_SPACE_LEFT_INTERVAL);
             builder.append(element.toString());
+            builder.append(CRASH_CONTENT_SPACE_RIGHT_INTERVAL);
             builder.append("\n");
         }
         return builder.toString();

@@ -15,7 +15,6 @@ import java.util.LinkedList;
 class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
 
-    private boolean isInit = false;
     private Thread mTargetThread;
     private LinkedList<Activity> mActvityList;
     private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -30,14 +29,13 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         mTargetThread = thread;
         mDefaultHandler = thread.getUncaughtExceptionHandler();
         mTargetThread.setUncaughtExceptionHandler(this);
-        isInit = true;
     }
 
     void setActList(LinkedList<Activity> list) {
         mActvityList = list;
     }
 
-    public void setCrashListener(CrashListener l) {
+    void setCrashListener(CrashListener l) {
         mCrashListener = l;
     }
 
@@ -52,16 +50,19 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         mDefaultHandler = null;
         mActvityList = null;
         mBackDoorThread = null;
+        mCrashListener = null;
 
     }
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        if (mDefaultHandler != null) {
-            mDefaultHandler.uncaughtException(t, e);
-        }
-        mBackDoorThread = new BackDoorThread(mActvityList.getLast());
+        Activity act = mActvityList.isEmpty() ? null : mActvityList.getLast();
+        mBackDoorThread = new BackDoorThread(act);
         mBackDoorThread.setCrashListener(mCrashListener);
+        mBackDoorThread.setCrashContent(CrashInfoHelper.convertStackTrace(e.getStackTrace()));
         mBackDoorThread.start();
+//        if (mDefaultHandler != null) {
+//            mDefaultHandler.uncaughtException(t, e);
+//        }
     }
 }

@@ -15,7 +15,7 @@ public class CrashAnalysis {
 
     private LinkedList<Activity> mActvityList = new LinkedList<>();
     private LinkedList<CrashExceptionHandler> mExHandlerList = new LinkedList<>();
-
+    private CrashListener mCrashListener;
     private static class InstanceHolder {
         private static CrashAnalysis instance = new CrashAnalysis();
     }
@@ -27,32 +27,46 @@ public class CrashAnalysis {
     private CrashAnalysis() {
     }
 
-    public void setTargetToMainThread(){
+    public void setCustomCrashListener(CrashListener listener) {
+        mCrashListener = listener;
+        for (CrashExceptionHandler item : mExHandlerList) {
+            item.setCrashListener(mCrashListener);
+        }
+    }
+
+    public void setTargetToMainThread() {
         setTarget(Looper.getMainLooper().getThread());
     }
+
     /**
      * Exception-Listener injection for target thread.
+     *
      * @param thread target
      */
     public void setTarget(Thread thread) {
         CrashExceptionHandler exHandler = new CrashExceptionHandler(thread);
+        if (mCrashListener != null){
+            exHandler.setCrashListener(mCrashListener);
+        }
         exHandler.setActList(mActvityList);
         mExHandlerList.add(exHandler);
     }
 
     /**
      * Clear Exception-Listener in target thread.
+     *
      * @param thread target
      */
     public void removeTarget(Thread thread) {
         Thread.UncaughtExceptionHandler exHandler = thread.getUncaughtExceptionHandler();
-        if (exHandler instanceof CrashExceptionHandler && mExHandlerList.remove(exHandler)){
+        if (exHandler instanceof CrashExceptionHandler && mExHandlerList.remove(exHandler)) {
             ((CrashExceptionHandler) exHandler).destory();
         }
     }
 
     /**
      * will show by target act.
+     *
      * @param act
      */
     public void registeredActivity(Activity act) {
@@ -61,6 +75,7 @@ public class CrashAnalysis {
 
     /**
      * remove.
+     *
      * @param act
      */
     public void unRegisterActivity(Activity act) {

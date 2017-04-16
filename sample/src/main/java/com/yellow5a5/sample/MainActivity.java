@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.yellow5a5.crashanalysis.CrashAnalysis;
 import com.yellow5a5.crashanalysis.CrashInfoHelper;
 import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
 
@@ -35,22 +36,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000);
 
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(final Thread t, final Throwable e) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Looper.prepare();
-                        CrashInfoDialog dialog = new CrashInfoDialog(MainActivity.this);
-                        dialog.setCrashContent(CrashInfoHelper.convertStackTrace(e.getStackTrace()));
-                        dialog.show();
+        CrashAnalysis.getInstance().registeredActivity(this);
+        CrashAnalysis.getInstance().setTargetToMainThread();
+//        Looper.getMainLooper().getThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(final Thread t, final Throwable e) {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Looper.prepare();
+//                        CrashInfoDialog dialog = new CrashInfoDialog(MainActivity.this);
+//                        dialog.show();
+//                        Looper.loop();
+//                    }
+//                }).start();
+//            }
+//        });
 
-                        Looper.loop();
-                    }
-                }).start();
-            }
-        });
     }
 
     private void initListener() {
@@ -58,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 throw new ArrayIndexOutOfBoundsException();
+//                CrashInfoDialog dialog = new CrashInfoDialog.Builder(MainActivity.this)
+//                        .setCrashContent("TSUSUSUUSUASKDSADLASJDLSDA")
+//                        .build();
+//                dialog.show();
             }
         });
     }
