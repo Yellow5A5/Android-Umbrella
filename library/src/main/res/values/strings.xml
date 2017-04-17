@@ -5,4 +5,6 @@
     <string name="dialog_crash_btn_saved_text">SaveLocal Succeed</string>
     <string name="dialog_crash_btn_save_fail_text">SaveLocal Failture!</string>
     <string name="dialog_crash_title">Crash Info</string>
+    <string name="dialog_crash_success_title">Crash Info(Save Successfully)</string>
+    <string name="dialog_crash_failture_title">Crash Info(Save Failture)</string>
 </resources>

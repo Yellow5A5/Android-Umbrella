@@ -38,6 +38,10 @@ public class CrashAnalysis {
         setTarget(Looper.getMainLooper().getThread());
     }
 
+    public void removeTargetToMainThread() {
+        removeTarget(Looper.getMainLooper().getThread());
+    }
+
     /**
      * Exception-Listener injection for target thread.
      *
@@ -65,7 +69,7 @@ public class CrashAnalysis {
     }
 
     /**
-     * will show by target act.
+     * will show in target act.
      *
      * @param act
      */

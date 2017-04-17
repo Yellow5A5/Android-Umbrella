@@ -1,6 +1,7 @@
 package com.yellow5a5.sample;
 
 import android.app.ApplicationErrorReport;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -59,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
         mBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                throw new ArrayIndexOutOfBoundsException();
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
+                CrashAnalysis.getInstance().removeTarget(Looper.getMainLooper().getThread());
+//                throw new ArrayIndexOutOfBoundsException();
 //                CrashInfoDialog dialog = new CrashInfoDialog.Builder(MainActivity.this)
 //                        .setCrashException("TSUSUSUUSUASKDSADLASJDLSDA")
 //                        .build();

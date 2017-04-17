@@ -10,4 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.yellow5a5.sample.SecondActivity">
 
+    <Button
+        android:id="@+id/test_btn"
+        android:text="Crash Btn"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
 </RelativeLayout>

@@ -19,15 +19,23 @@ import com.yellow5a5.crashanalysis.R;
 
 public class CrashInfoDialog extends Dialog {
 
+    private TextView mTitleTv;
     private TextView mCrashContentTv;
     private Button mLeftBtn;
-    private Button mRightBtn;
+    private Button mShareBtn;
     private ImageView mCloseV;
 
+
     public interface CrashDialogCallback {
-        void onSaveBtnClick();
+        void onCloseBtnClick();
 
         void onShareBtnClick();
+    }
+
+    private CrashDialogCallback mCrashDialogCallback;
+
+    public void setCrashDialogCallback(CrashDialogCallback l) {
+        mCrashDialogCallback = l;
     }
 
     private CrashInfoDialog(Context context) {
@@ -43,27 +51,28 @@ public class CrashInfoDialog extends Dialog {
 
     public void createViewInner(View view) {
         setContentView(view);
+        mTitleTv = (TextView) findViewById(R.id.dialog_crash_title);
         mCrashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
-        mLeftBtn = (Button) findViewById(R.id.dialog_crash_save_btn);
-        mRightBtn = (Button) findViewById(R.id.dialog_crash_share_btn);
-        mCloseV = (ImageView) findViewById(R.id.dialog_crash_close_iv);
-        mRightBtn.setVisibility(View.VISIBLE);
-
+        mLeftBtn = (Button) view.findViewById(R.id.dialog_crash_save_btn);
+        mShareBtn = (Button) view.findViewById(R.id.dialog_crash_share_btn);
+        mCloseV = (ImageView) view.findViewById(R.id.dialog_crash_close_iv);
+        mShareBtn.setVisibility(View.VISIBLE);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v == mLeftBtn) {
-                    //TODO
-                } else if (v == mRightBtn) {
-                    //TODO Share.
-                } else if (v == mCloseV) {
-                    //TODO Exit App.
+                if (mCrashDialogCallback == null) {
+                    return;
                 }
-
+                if (v == mShareBtn) {
+                    mCrashDialogCallback.onShareBtnClick();
+                } else if (v == mCloseV) {
+                    mCrashDialogCallback.onCloseBtnClick();
+                }
             }
         };
-
-
+        mLeftBtn.setOnClickListener(listener);
+        mShareBtn.setOnClickListener(listener);
+        mCloseV.setOnClickListener(listener);
         mCrashContentTv.setHorizontallyScrolling(true);
         mCrashContentTv.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
@@ -78,17 +87,20 @@ public class CrashInfoDialog extends Dialog {
     }
 
     public void setCompleteState() {
+        mTitleTv.setText(R.string.dialog_crash_success_title);
 //        mLeftBtn.setText(R.string.dialog_crash_btn_saved_text);
 //        mLeftBtn.setVisibility(View.VISIBLE);
-//        mRightBtn.setVisibility(View.VISIBLE);
-        Toast.makeText(getContext(), R.string.dialog_crash_btn_saved_text, Toast.LENGTH_LONG).show();
+//        mShareBtn.setVisibility(View.VISIBLE);
+//        Toast.makeText(getContext(), R.string.dialog_crash_btn_saved_text, Toast.LENGTH_LONG).show();
+
     }
 
     public void setFailtureState() {
+        mTitleTv.setText(R.string.dialog_crash_failture_title);
 //        mLeftBtn.setText(R.string.dialog_crash_btn_save_fail_text);
 //        mLeftBtn.setVisibility(View.VISIBLE);
-//        mRightBtn.setVisibility(View.VISIBLE);
-        Toast.makeText(getContext(), R.string.dialog_crash_btn_save_fail_text, Toast.LENGTH_LONG).show();
+//        mShareBtn.setVisibility(View.VISIBLE);
+//        Toast.makeText(getContext(), R.string.dialog_crash_btn_save_fail_text, Toast.LENGTH_LONG).show();
     }
 
     public void setLeftClickable(boolean isClickable) {
@@ -96,7 +108,7 @@ public class CrashInfoDialog extends Dialog {
     }
 
     public void setRightClickable(boolean isClickable) {
-        mRightBtn.setClickable(isClickable);
+        mShareBtn.setClickable(isClickable);
     }
 
     public static class Builder {
@@ -104,12 +116,6 @@ public class CrashInfoDialog extends Dialog {
         private Context context;
         private CrashInfoDialog dialog;
         private String crashContent;
-
-        private CrashDialogCallback mCrashDialogCallback;
-
-        public void setCrashDialogCallback(CrashDialogCallback l) {
-            mCrashDialogCallback = l;
-        }
 
         public Builder(Context context) {
             this.context = context;
@@ -132,22 +138,6 @@ public class CrashInfoDialog extends Dialog {
             TextView crashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
             final Button saveBtn = (Button) view.findViewById(R.id.dialog_crash_save_btn);
             final Button shareBtn = (Button) view.findViewById(R.id.dialog_crash_share_btn);
-            View.OnClickListener listener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mCrashDialogCallback == null) {
-                        return;
-                    }
-                    if (v == saveBtn) {
-                        mCrashDialogCallback.onSaveBtnClick();
-
-                    } else if (v == shareBtn) {
-                        mCrashDialogCallback.onShareBtnClick();
-                    }
-                }
-            };
-//            saveBtn.setOnClickListener(listener);
-//            shareBtn.setOnClickListener(listener);
             saveBtn.setClickable(false);
             if (crashContent != null) {
                 crashContentTv.setText(crashContent);

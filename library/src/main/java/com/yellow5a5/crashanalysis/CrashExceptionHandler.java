@@ -49,18 +49,17 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         mActvityList = null;
         mBackDoorThread = null;
         mCrashListener = null;
-
     }
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        Activity act = mActvityList.isEmpty() ? null : mActvityList.getLast();
+        Activity act = mActvityList.isEmpty() ? CrashInfoHelper.getForegroundActivity() : mActvityList.getLast();
         mBackDoorThread = new BackDoorThread(act);
         mBackDoorThread.setCrashListener(mCrashListener);
         mBackDoorThread.setCrashException(e);
         mBackDoorThread.start();
-//        if (mDefaultHandler != null) {
-//            mDefaultHandler.uncaughtException(t, e);
-//        }
+        if (mDefaultHandler != null) {
+            mDefaultHandler.uncaughtException(t, e);
+        }
     }
 }
