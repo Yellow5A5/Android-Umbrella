@@ -11,7 +11,7 @@ import android.os.Bundle;
 public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+        CrashAnalysis.getInstance().registeredActivity(activity);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCall
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-
+        CrashAnalysis.getInstance().unRegisterActivity(activity);
     }
 }

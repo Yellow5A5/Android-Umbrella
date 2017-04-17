@@ -106,8 +106,8 @@ public class CrashInfoHelper {
     }
 
     public static Activity getForegroundActivity() {
-        Class activityThreadClass = null;
         try {
+            Class activityThreadClass = null;
             activityThreadClass = Class.forName("android.app.ActivityThread");
 
             Object activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);

@@ -19,6 +19,15 @@ class BackDoorThread extends Thread {
     private Activity mActivity;
     private Throwable mCrashException;
     private CrashListener mCrashListener;
+    private onCloseInfoCallBack mOnCloseInfoCallBack;
+
+    public interface onCloseInfoCallBack {
+        void onClose();
+    }
+
+    void setCloseInfoCallBack(onCloseInfoCallBack callback){
+        mOnCloseInfoCallBack = callback;
+    }
 
     void setCrashListener(CrashListener l) {
         mCrashListener = l;
@@ -46,8 +55,9 @@ class BackDoorThread extends Thread {
             dialog.setCrashDialogCallback(new CrashInfoDialog.CrashDialogCallback() {
                 @Override
                 public void onCloseBtnClick() {
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                    System.exit(1);
+                    if (mOnCloseInfoCallBack != null){
+                        mOnCloseInfoCallBack.onClose();
+                    }
                 }
 
                 @Override
@@ -64,7 +74,6 @@ class BackDoorThread extends Thread {
                 if (finalDialog != null){
                     finalDialog.setCompleteState();
                     clipCrashContent(crashInfoSave);
-                    //TODO 反射的方式,解决对外部Act的依赖.
                 }
             }
 
@@ -78,7 +87,7 @@ class BackDoorThread extends Thread {
         //TODO 加入跳转支持.
         Log.e(CrashAnalysis.class.getName(), crashInfoSave);
         if (mCrashListener != null) {
-            mCrashListener.onCallBack();
+            mCrashListener.onCrash();
         }
 
         Looper.loop();

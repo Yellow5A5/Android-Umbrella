@@ -32,28 +32,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 new Handler().postDelayed(this, 2000);
-//                throw new ArrayIndexOutOfBoundsException();
                 Toast.makeText(MainActivity.this, flag++ + "", Toast.LENGTH_SHORT).show();
+//                throw new ArrayIndexOutOfBoundsException();
             }
         }, 2000);
-
-        CrashAnalysis.getInstance().registeredActivity(this);
-        CrashAnalysis.getInstance().setTargetToMainThread();
-//        Looper.getMainLooper().getThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-//            @Override
-//            public void uncaughtException(final Thread t, final Throwable e) {
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Looper.prepare();
-//                        CrashInfoDialog dialog = new CrashInfoDialog(MainActivity.this);
-//                        dialog.show();
-//                        Looper.loop();
-//                    }
-//                }).start();
-//            }
-//        });
-
     }
 
     private void initListener() {
@@ -62,12 +44,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 startActivity(intent);
-                CrashAnalysis.getInstance().removeTarget(Looper.getMainLooper().getThread());
 //                throw new ArrayIndexOutOfBoundsException();
-//                CrashInfoDialog dialog = new CrashInfoDialog.Builder(MainActivity.this)
-//                        .setCrashException("TSUSUSUUSUASKDSADLASJDLSDA")
-//                        .build();
-//                dialog.show();
             }
         });
     }
