@@ -11,7 +11,6 @@ import java.util.LinkedList;
 
 class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
-
     private Thread mTargetThread;
     private LinkedList<Activity> mActvityList;
     private Thread.UncaughtExceptionHandler mDefaultHandler;
@@ -53,7 +52,7 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
     }
 
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
+    public void uncaughtException(final Thread t, Throwable e) {
         Activity act = mActvityList.isEmpty() ? CrashInfoHelper.getForegroundActivity() : mActvityList.getLast();
         mBackDoorThread = new BackDoorThread(act);
         mBackDoorThread.setCrashListener(mCrashListener);
@@ -61,6 +60,9 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         mBackDoorThread.setCloseInfoCallBack(new BackDoorThread.onCloseInfoCallBack() {
             @Override
             public void onClose() {
+                if (t.getId() != Looper.getMainLooper().getThread().getId()){
+                    return;
+                }
                 for (Activity act: mActvityList) {
                     if (act != null){
                         act.finish();
