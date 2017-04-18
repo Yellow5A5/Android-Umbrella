@@ -84,8 +84,7 @@ class BackDoorThread extends Thread {
                 }
             }
         });
-        //TODO 加入跳转支持.
-        Log.e(CrashAnalysis.class.getName(), crashInfoSave);
+        Log.e(CrashAnalysisCenter.class.getName(), crashInfoSave);
         if (mCrashListener != null) {
             mCrashListener.onCrash();
         }

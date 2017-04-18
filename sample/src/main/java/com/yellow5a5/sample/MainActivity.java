@@ -1,18 +1,12 @@
 package com.yellow5a5.sample;
 
-import android.app.ApplicationErrorReport;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.yellow5a5.crashanalysis.CrashAnalysis;
-import com.yellow5a5.crashanalysis.CrashInfoHelper;
-import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
 
 public class MainActivity extends AppCompatActivity {
 

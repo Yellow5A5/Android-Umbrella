@@ -3,28 +3,26 @@ package com.yellow5a5.crashanalysis;
 import android.app.Activity;
 import android.os.Looper;
 
-import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
-
 import java.util.LinkedList;
 
 /**
  * Created by Yellow5A5 on 17/4/15.
  */
 
-public class CrashAnalysis {
+public class CrashAnalysisCenter {
 
     private LinkedList<Activity> mActvityList = new LinkedList<>();
     private LinkedList<CrashExceptionHandler> mExHandlerList = new LinkedList<>();
     private CrashListener mCrashListener;
     private static class InstanceHolder {
-        private static CrashAnalysis instance = new CrashAnalysis();
+        private static CrashAnalysisCenter instance = new CrashAnalysisCenter();
     }
 
-    public static CrashAnalysis getInstance() {
+    public static CrashAnalysisCenter getInstance() {
         return InstanceHolder.instance;
     }
 
-    private CrashAnalysis() {
+    private CrashAnalysisCenter() {
     }
 
     public void setCustomCrashListener(CrashListener listener) {

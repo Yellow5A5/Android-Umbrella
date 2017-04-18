@@ -11,12 +11,12 @@ import android.os.Bundle;
 public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        CrashAnalysis.getInstance().registeredActivity(activity);
+        CrashAnalysisCenter.getInstance().registeredActivity(activity);
     }
 
     @Override
     public void onActivityStarted(Activity activity) {
-
+        //TODO 通过Class +  方法映射Type去记录操作路径。
     }
 
     @Override
@@ -41,6 +41,6 @@ public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCall
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        CrashAnalysis.getInstance().unRegisterActivity(activity);
+        CrashAnalysisCenter.getInstance().unRegisterActivity(activity);
     }
 }
