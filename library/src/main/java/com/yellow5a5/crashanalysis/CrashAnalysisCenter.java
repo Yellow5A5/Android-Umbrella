@@ -14,6 +14,8 @@ public class CrashAnalysisCenter {
     private LinkedList<Activity> mActvityList = new LinkedList<>();
     private LinkedList<CrashExceptionHandler> mExHandlerList = new LinkedList<>();
     private CrashListener mCrashListener;
+    private CrashBaseConfit mCrashConfig;
+
     private static class InstanceHolder {
         private static CrashAnalysisCenter instance = new CrashAnalysisCenter();
     }
@@ -34,6 +36,14 @@ public class CrashAnalysisCenter {
 
     public void setTargetToMainThread() {
         setTarget(Looper.getMainLooper().getThread());
+    }
+
+    public void setTargetToDefaultThread(){
+        setTarget(null);
+    }
+
+    public void setTargetCurrentThread(){
+        setTarget(Thread.currentThread());
     }
 
     public void removeTargetToMainThread() {
@@ -84,4 +94,12 @@ public class CrashAnalysisCenter {
         mActvityList.remove(act);
     }
 
+    public CrashBaseConfit getCrashConfig() {
+        //TODO 需要自己实现一个default防空.
+        return mCrashConfig;
+    }
+
+    public void setCrashConfig(CrashBaseConfit mCrashConfig) {
+        this.mCrashConfig = mCrashConfig;
+    }
 }

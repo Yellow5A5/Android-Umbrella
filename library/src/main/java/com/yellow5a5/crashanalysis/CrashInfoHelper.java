@@ -9,6 +9,8 @@ import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -64,28 +66,26 @@ public class CrashInfoHelper {
     public static final String CRASH_CONTENT_SPACE_RIGHT_INTERVAL = "   |  ";
     public static final String CRASH_CONTENT_ITEM_INTERVAL = "——————————————————————————————————————————————————————————————";
 
-    public static String convertStackTraceToShow(StackTraceElement[] list) {
-        if (list == null) {
+    public static String convertExceptionToStringShow(Throwable throwable) {
+        if (throwable == null) {
             return "数据栈为空。";
         }
-        StringBuilder builder = new StringBuilder();
-        for (StackTraceElement element : list) {
-            builder.append(element.toString());
-            builder.append("\n");
-        }
-        builder.append("\n");
-        return builder.toString();
+        return getStackTraceAsString(throwable);
     }
 
-    public static String convertStackTraceToSave(StackTraceElement[] list) {
-        if (list == null) {
+    public static String convertExceptionToStringSave(Throwable throwable) {
+        if (throwable == null) {
             return "数据栈为空。";
         }
+        StackTraceElement[] list = throwable.getStackTrace();
         StringBuilder builder = new StringBuilder();
         String currentTime = new SimpleDateFormat("yyyyMMdd_HH_mm_ss").format(Calendar.getInstance().getTime());
         builder.append(CRASH_CONTENT_TOP_INTERVAL);
         builder.append(currentTime);
         builder.append(CRASH_CONTENT_BOTTOM_INTERVAL);
+        builder.append("\n");
+        builder.append(CRASH_CONTENT_SPACE_LEFT_INTERVAL);
+        builder.append(throwable.toString());
         builder.append("\n");
         for (StackTraceElement element : list) {
             builder.append(CRASH_CONTENT_SPACE_LEFT_INTERVAL);
@@ -95,6 +95,12 @@ public class CrashInfoHelper {
         builder.append(CRASH_CONTENT_ITEM_INTERVAL);
         builder.append("\n");
         return builder.toString();
+    }
+
+    public static String getStackTraceAsString(Throwable throwable) {
+        StringWriter stringWriter = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(stringWriter));
+        return stringWriter.toString();
     }
 
     public static void shareCrashInfo(String content, Context context) {

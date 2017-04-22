@@ -66,6 +66,7 @@ public class CrashInfoDialog extends Dialog {
                     mCrashDialogCallback.onShareBtnClick();
                 } else if (v == mCloseV) {
                     mCrashDialogCallback.onCloseBtnClick();
+                    dismiss();
                 }
             }
         };

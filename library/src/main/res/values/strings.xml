@@ -7,4 +7,7 @@
     <string name="dialog_crash_title">Crash Info</string>
     <string name="dialog_crash_success_title">Crash Info(Save Successfully)</string>
     <string name="dialog_crash_failture_title">Crash Info(Save Failture)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -45,7 +45,7 @@ class BackDoorThread extends Thread {
     public void run() {
         Looper.prepare();
         CrashInfoDialog dialog = null;
-        final String crashInfoShow = CrashInfoHelper.convertStackTraceToShow(mCrashException.getStackTrace());
+        final String crashInfoShow = CrashInfoHelper.convertExceptionToStringShow(mCrashException);
         if (mActivity != null) {
             clipCrashContent(crashInfoShow);
             dialog = new CrashInfoDialog.Builder(mActivity)
@@ -67,8 +67,9 @@ class BackDoorThread extends Thread {
             });
         }
         final CrashInfoDialog finalDialog = dialog;
-        final String crashInfoSave = CrashInfoHelper.convertStackTraceToSave(mCrashException.getStackTrace());
-        CrashInfoHelper.saveInfoLocal(crashInfoSave, new CrashInfoSaveCallBack() {
+        final String crashInfoSave = CrashInfoHelper.convertExceptionToStringSave(mCrashException);
+        final String path = CrashAnalysisCenter.getInstance().getCrashConfig().getLocalPath();
+        CrashInfoHelper.saveInfoLocal(path,crashInfoSave, new CrashInfoSaveCallBack() {
             @Override
             public void onSuccess() {
                 if (finalDialog != null){

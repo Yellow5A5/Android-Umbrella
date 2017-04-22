@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.yellow5a5.crashanalysis.CrashAnalysisCenter;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button mBtn1;
@@ -36,9 +38,16 @@ public class MainActivity extends AppCompatActivity {
         mBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                startActivity(intent);
-//                throw new ArrayIndexOutOfBoundsException();
+//                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+//                startActivity(intent);
+//                Thread subThread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+                        throw new ArrayIndexOutOfBoundsException();
+//                    }
+//                });
+//                CrashAnalysisCenter.getInstance().setTarget(subThread);
+//                subThread.start();
             }
         });
     }
