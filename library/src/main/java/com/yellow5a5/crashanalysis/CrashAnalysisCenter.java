@@ -3,6 +3,9 @@ package com.yellow5a5.crashanalysis;
 import android.app.Activity;
 import android.os.Looper;
 
+import com.yellow5a5.crashanalysis.Config.CrashBaseConfit;
+import com.yellow5a5.crashanalysis.Config.DefaultUmbrellaConfig;
+
 import java.util.LinkedList;
 
 /**
@@ -96,6 +99,9 @@ public class CrashAnalysisCenter {
 
     public CrashBaseConfit getCrashConfig() {
         //TODO 需要自己实现一个default防空.
+        if (mCrashConfig == null){
+            mCrashConfig = new DefaultUmbrellaConfig();
+        }
         return mCrashConfig;
     }
 
