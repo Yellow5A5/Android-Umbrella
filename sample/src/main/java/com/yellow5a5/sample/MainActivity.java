@@ -13,6 +13,7 @@ import com.yellow5a5.crashanalysis.CrashAnalysisCenter;
 public class MainActivity extends AppCompatActivity {
 
     private Button mBtn1;
+    private Button mBtn2;
 
     private int flag;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_main);
                 mBtn1 = (Button) findViewById(R.id.demo_btn1);
+                mBtn2 = (Button) findViewById(R.id.demo_btn2);
 
         initListener();
 
@@ -38,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         mBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-//                startActivity(intent);
 //                Thread subThread = new Thread(new Runnable() {
 //                    @Override
 //                    public void run() {
@@ -48,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
 //                });
 //                CrashAnalysisCenter.getInstance().setTarget(subThread);
 //                subThread.start();
+            }
+        });
+
+        mBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
             }
         });
     }

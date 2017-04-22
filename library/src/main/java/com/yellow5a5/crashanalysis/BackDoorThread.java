@@ -69,7 +69,8 @@ class BackDoorThread extends Thread {
         final CrashInfoDialog finalDialog = dialog;
         final String crashInfoSave = CrashInfoHelper.convertExceptionToStringSave(mCrashException);
         final String path = CrashAnalysisCenter.getInstance().getCrashConfig().getLocalPath();
-        CrashInfoHelper.saveInfoLocal(path,crashInfoSave, new CrashInfoSaveCallBack() {
+        final String appName = CrashAnalysisCenter.getInstance().getCrashConfig().getAppName();
+        CrashInfoHelper.saveInfoLocal(path, appName, crashInfoSave, new CrashInfoSaveCallBack() {
             @Override
             public void onSuccess() {
                 if (finalDialog != null){

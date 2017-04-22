@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.yellow5a5.crashanalysis.Config.DefaultUmbrellaConfig;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,15 +23,9 @@ import java.util.Map;
  * Created by Yellow5A5 on 17/4/16.
  */
 
-public class CrashInfoHelper {
+class CrashInfoHelper {
 
-    public static final String CRASH_INFO_DEFAULT_PATH = "localCrashInfo";
-
-    public static void saveInfoLocal(String content, CrashInfoSaveCallBack callback) {
-        saveInfoLocal("", content, callback);
-    }
-
-    public static void saveInfoLocal(String path, String content, CrashInfoSaveCallBack callback) {
+    public static void saveInfoLocal(String path, String prefixFileName,String content, CrashInfoSaveCallBack callback) {
         if (TextUtils.isEmpty(content)) {
             callback.onFailture();
             return;
@@ -36,7 +33,7 @@ public class CrashInfoHelper {
         try {
             File root = null;
             if (TextUtils.isEmpty(path)) {
-                root = new File(Environment.getExternalStorageDirectory(), CRASH_INFO_DEFAULT_PATH);
+                root = new File(Environment.getExternalStorageDirectory(), DefaultUmbrellaConfig.CRASH_INFO_DEFAULT_PATH);
             } else {
                 root = new File(path);
             }
@@ -44,6 +41,9 @@ public class CrashInfoHelper {
                 root.mkdirs();
             }
             String currentTime = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+            if (!TextUtils.isEmpty(prefixFileName)){
+                currentTime = prefixFileName + currentTime;
+            }
             File gpxfile = new File(root, currentTime + ".txt");
             FileWriter writer = new FileWriter(gpxfile, true);
             writer.append(content);

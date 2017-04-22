@@ -98,7 +98,6 @@ public class CrashAnalysisCenter {
     }
 
     public CrashBaseConfit getCrashConfig() {
-        //TODO 需要自己实现一个default防空.
         if (mCrashConfig == null){
             mCrashConfig = new DefaultUmbrellaConfig();
         }

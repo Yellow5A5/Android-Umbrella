@@ -4,6 +4,8 @@ import android.os.Environment;
 
 import com.yellow5a5.crashanalysis.Config.CrashBaseConfit;
 
+import java.io.File;
+
 /**
  * Created by Yellow5A5 on 17/4/22.
  */
@@ -14,12 +16,12 @@ public class DefaultUmbrellaConfig extends CrashBaseConfit{
 
     @Override
     public String getAppName() {
-        return "";
+        return "Default_";
     }
 
     @Override
     public String getLocalPath() {
-        return Environment.getExternalStorageDirectory() + CRASH_INFO_DEFAULT_PATH;
+        return Environment.getExternalStorageDirectory() + File.separator + CRASH_INFO_DEFAULT_PATH;
     }
 
     @Override

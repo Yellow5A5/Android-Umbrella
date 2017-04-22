@@ -1,4 +1,4 @@
-package com.yellow5a5.crashanalysis.fragment;
+package com.yellow5a5.crashanalysis.Adapter;
 
 import android.support.v4.view.ViewPager;
 
