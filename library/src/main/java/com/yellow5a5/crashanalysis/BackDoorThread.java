@@ -8,7 +8,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.yellow5a5.crashanalysis.View.CrashInfoDialog;
+import com.yellow5a5.crashanalysis.view.CrashInfoDialog;
 
 /**
  * Created by Yellow5A5 on 17/4/16.
