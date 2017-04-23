@@ -3,12 +3,10 @@ package com.yellow5a5.crashanalysis;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.yellow5a5.crashanalysis.Config.DefaultUmbrellaConfig;
+import com.yellow5a5.crashanalysis.config.DefaultUmbrellaConfig;
 
 import java.io.File;
 import java.io.FileWriter;

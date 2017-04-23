@@ -39,14 +39,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/dialog_crash_save_btn"
+            android:id="@+id/dialog_crash_restart_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:layout_weight="1"
             android:background="#9983D0F0"
-            android:text="@string/dialog_crash_btn_saving_text"
-            android:visibility="gone"
+            android:text="@string/dialog_crash_btn_restart_text"
             tools:visibility="visible" />
 
         <Button

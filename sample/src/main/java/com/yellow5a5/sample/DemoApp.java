@@ -1,6 +1,7 @@
 package com.yellow5a5.sample;
 
 import android.app.Application;
+import android.os.Looper;
 
 import com.yellow5a5.crashanalysis.CrashAnalysisCenter;
 import com.yellow5a5.crashanalysis.CrashAnalysisLcAdapter;
@@ -23,5 +24,13 @@ public class DemoApp extends Application{
                 //TODO...
             }
         });
+//        getMainLooper().getThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread t, Throwable e) {
+//                while (true){
+//                    Looper.loop();
+//                }
+//            }
+//        });
     }
 }

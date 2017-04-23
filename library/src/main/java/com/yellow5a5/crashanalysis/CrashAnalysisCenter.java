@@ -3,8 +3,8 @@ package com.yellow5a5.crashanalysis;
 import android.app.Activity;
 import android.os.Looper;
 
-import com.yellow5a5.crashanalysis.Config.CrashBaseConfit;
-import com.yellow5a5.crashanalysis.Config.DefaultUmbrellaConfig;
+import com.yellow5a5.crashanalysis.config.CrashBaseConfit;
+import com.yellow5a5.crashanalysis.config.DefaultUmbrellaConfig;
 
 import java.util.LinkedList;
 

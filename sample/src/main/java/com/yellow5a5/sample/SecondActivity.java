@@ -8,9 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 
-import com.yellow5a5.crashanalysis.Adapter.CrashLogAdapter;
+import com.yellow5a5.crashanalysis.adapter.CrashLogAdapter;
 import com.yellow5a5.crashanalysis.CrashAnalysisCenter;
 import com.yellow5a5.crashanalysis.activity.UmbrellaCorporationActivity;
 

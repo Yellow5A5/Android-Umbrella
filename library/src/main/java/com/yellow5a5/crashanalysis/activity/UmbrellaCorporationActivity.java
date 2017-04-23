@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.yellow5a5.crashanalysis.R;
-import com.yellow5a5.crashanalysis.Adapter.OnPageChangeAdapter;
+import com.yellow5a5.crashanalysis.adapter.OnPageChangeAdapter;
 import com.yellow5a5.crashanalysis.fragment.LogCenterFragment;
 
 import java.util.ArrayList;

@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yellow5a5.crashanalysis.Adapter.CrashLogAdapter;
+import com.yellow5a5.crashanalysis.adapter.CrashLogAdapter;
 import com.yellow5a5.crashanalysis.CrashAnalysisCenter;
 import com.yellow5a5.crashanalysis.R;
 
