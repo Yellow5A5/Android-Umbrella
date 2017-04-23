@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ class BackDoorThread extends Thread {
 
     public interface onCloseInfoCallBack {
         void onClose();
+        void onRestart();
     }
 
     void setCloseInfoCallBack(onCloseInfoCallBack callback){
@@ -63,6 +65,21 @@ class BackDoorThread extends Thread {
                 @Override
                 public void onShareBtnClick() {
                     CrashInfoHelper.shareCrashInfo(crashInfoShow, mActivity);
+                }
+
+                @Override
+                public void onRestartBtnClick() {
+                    if (mOnCloseInfoCallBack != null){
+                        mOnCloseInfoCallBack.onRestart();
+                    }
+//                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            while (true){
+//                                Looper.loop();
+//                            }
+//                        }
+//                    });
                 }
             });
         }

@@ -1,8 +1,6 @@
-package com.yellow5a5.crashanalysis.Config;
+package com.yellow5a5.crashanalysis.config;
 
 import android.os.Environment;
-
-import com.yellow5a5.crashanalysis.Config.CrashBaseConfit;
 
 import java.io.File;
 
@@ -27,6 +25,11 @@ public class DefaultUmbrellaConfig extends CrashBaseConfit{
     @Override
     public boolean isOpenActPath() {
         return false;
+    }
+
+    @Override
+    public boolean isNeedRestartApp() {
+        return true;
     }
 
     @Override

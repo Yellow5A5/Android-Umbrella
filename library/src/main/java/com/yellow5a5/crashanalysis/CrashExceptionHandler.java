@@ -1,6 +1,7 @@
 package com.yellow5a5.crashanalysis;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
@@ -20,6 +21,8 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
     private BackDoorThread mBackDoorThread;
     private CrashListener mCrashListener;
 
+    private boolean isNeedRestartApp = false;
+
     CrashExceptionHandler(Thread thread) {
         mTargetThread = thread;
         if (mTargetThread == null) {
@@ -28,10 +31,10 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         } else {
             //系统默认的线程捕抓处理是否要过滤掉.
             //1、过滤:
-            //mDefaultHandler = (thread.getUncaughtExceptionHandler() == thread.getThreadGroup()
-            //      ? null : thread.getUncaughtExceptionHandler());
+            mDefaultHandler = (thread.getUncaughtExceptionHandler() == thread.getThreadGroup()
+                  ? null : thread.getUncaughtExceptionHandler());
             //2、不过滤:
-            mDefaultHandler = thread.getUncaughtExceptionHandler();
+//            mDefaultHandler = thread.getUncaughtExceptionHandler();
 
             mTargetThread.setUncaughtExceptionHandler(this);
         }
@@ -62,6 +65,7 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     }
 
+
     @Override
     public void uncaughtException(final Thread t, final Throwable e) {
         Activity act = mActvityList.isEmpty() ? CrashInfoHelper.getForegroundActivity() : mActvityList.getLast();
@@ -71,11 +75,11 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         mBackDoorThread.setCloseInfoCallBack(new BackDoorThread.onCloseInfoCallBack() {
             @Override
             public void onClose() {
-                if (t.getId() != Looper.getMainLooper().getThread().getId()){
+                if (t.getId() != Looper.getMainLooper().getThread().getId()) {
                     return;
                 }
-                for (Activity act: mActvityList) {
-                    if (act != null){
+                for (Activity act : mActvityList) {
+                    if (act != null) {
                         act.finish();
                     }
                 }
@@ -88,8 +92,29 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
                 System.exit(1);
 
             }
+
+            @Override
+            public void onRestart() {
+                if(CrashAnalysisCenter.getInstance().getCrashConfig().isNeedRestartApp()){
+                    isNeedRestartApp = true;
+                }
+
+            }
         });
         mBackDoorThread.start();
         //PLACE TWO
+
+        //正常来说,只有主线程才需要重启
+        if (t == Looper.getMainLooper().getThread()){
+            while (true){
+                if (isNeedRestartApp) {
+                    try {
+                        Looper.loop();
+                    }catch (Exception ex){
+                        uncaughtException(t,ex);
+                    }
+                }
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,8 @@ public class CrashInfoDialog extends Dialog {
         void onCloseBtnClick();
 
         void onShareBtnClick();
+
+        void onRestartBtnClick();
     }
 
     private CrashDialogCallback mCrashDialogCallback;
@@ -52,7 +55,7 @@ public class CrashInfoDialog extends Dialog {
         setContentView(view);
         mTitleTv = (TextView) findViewById(R.id.dialog_crash_title);
         mCrashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
-        mLeftBtn = (Button) view.findViewById(R.id.dialog_crash_save_btn);
+        mLeftBtn = (Button) view.findViewById(R.id.dialog_crash_restart_btn);
         mShareBtn = (Button) view.findViewById(R.id.dialog_crash_share_btn);
         mCloseV = (ImageView) view.findViewById(R.id.dialog_crash_close_iv);
         mShareBtn.setVisibility(View.VISIBLE);
@@ -67,6 +70,10 @@ public class CrashInfoDialog extends Dialog {
                 } else if (v == mCloseV) {
                     mCrashDialogCallback.onCloseBtnClick();
                     dismiss();
+                } else if (v == mLeftBtn) {
+                    Log.e(CrashInfoDialog.class.getName(), "onClick: reset");
+                    dismiss();
+                    mCrashDialogCallback.onRestartBtnClick();
                 }
             }
         };
@@ -136,7 +143,7 @@ public class CrashInfoDialog extends Dialog {
         private void setupView() {
             View view = LayoutInflater.from(context).inflate(R.layout.crash_dislay_layout, null, false);
             TextView crashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
-            final Button saveBtn = (Button) view.findViewById(R.id.dialog_crash_save_btn);
+            final Button saveBtn = (Button) view.findViewById(R.id.dialog_crash_restart_btn);
             final Button shareBtn = (Button) view.findViewById(R.id.dialog_crash_share_btn);
             saveBtn.setClickable(false);
             if (crashContent != null) {
