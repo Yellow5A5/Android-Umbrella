@@ -71,7 +71,6 @@ public class CrashInfoDialog extends Dialog {
                     mCrashDialogCallback.onCloseBtnClick();
                     dismiss();
                 } else if (v == mLeftBtn) {
-                    Log.e(CrashInfoDialog.class.getName(), "onClick: reset");
                     dismiss();
                     mCrashDialogCallback.onRestartBtnClick();
                 }

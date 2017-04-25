@@ -26,17 +26,17 @@ public class UmbrellaCorporationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_umbrella_corporation);
+        data.add(LogCenterFragment.newInstance());
+        data.add(LogCenterFragment.newInstance());
         initView();
         initListener();
 
-        data.add(LogCenterFragment.newInstance());
-        data.add(LogCenterFragment.newInstance());
     }
 
     private void initView() {
         mViewPage = (ViewPager) findViewById(R.id.umbrella_viewpager_container);
-        LinearLayout mCrashLogLl = (LinearLayout) findViewById(R.id.umbrella_bottom_log_btn);
-        LinearLayout mSettingLl = (LinearLayout) findViewById(R.id.umbrella_bottom_settind_btn);
+        mCrashLogLl = (LinearLayout) findViewById(R.id.umbrella_bottom_log_btn);
+        mSettingLl = (LinearLayout) findViewById(R.id.umbrella_bottom_settind_btn);
     }
 
     private void initListener() {
@@ -50,6 +50,8 @@ public class UmbrellaCorporationActivity extends AppCompatActivity {
                 }
             }
         };
+        mCrashLogLl.setOnClickListener(listener);
+        mSettingLl.setOnClickListener(listener);
 
         mViewPage.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

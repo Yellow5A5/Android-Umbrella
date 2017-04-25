@@ -68,6 +68,7 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(final Thread t, final Throwable e) {
+        isNeedRestartApp = false;
         Activity act = mActvityList.isEmpty() ? CrashInfoHelper.getForegroundActivity() : mActvityList.getLast();
         mBackDoorThread = new BackDoorThread(act);
         mBackDoorThread.setCrashListener(mCrashListener);
@@ -84,12 +85,12 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
                     }
                 }
                 //PLACE ONE
-                //原来的CrashHandler处理可以放在这,或者放在PLACE TWO,主要看开发者的需要.
+                //原来的CrashHandler处理或可以放在这,或放在PLACE TWO,主要看开发者的需要.
                 if (mDefaultHandler != null) {
                     mDefaultHandler.uncaughtException(t, e);
                 }
                 android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
+                System.exit(10);
 
             }
 

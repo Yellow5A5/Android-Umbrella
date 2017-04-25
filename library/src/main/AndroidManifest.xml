@@ -3,7 +3,9 @@
     package="com.yellow5a5.crashanalysis">
 
     <application>
-        <activity android:name=".activity.UmbrellaCorporationActivity"></activity>
+        <activity android:name=".activity.UmbrellaCorporationActivity"
+            android:process=":umbrella_activity"
+            />
     </application>
 
 </manifest>

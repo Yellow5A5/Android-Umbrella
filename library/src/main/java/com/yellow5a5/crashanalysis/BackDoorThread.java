@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.yellow5a5.crashanalysis.activity.UmbrellaCorporationActivity;
 import com.yellow5a5.crashanalysis.view.CrashInfoDialog;
 
 /**
@@ -64,7 +66,9 @@ class BackDoorThread extends Thread {
 
                 @Override
                 public void onShareBtnClick() {
-                    CrashInfoHelper.shareCrashInfo(crashInfoShow, mActivity);
+//                    CrashInfoHelper.shareCrashInfo(crashInfoShow, mActivity);
+                    Intent intent = new Intent(mActivity, UmbrellaCorporationActivity.class);
+                    mActivity.startActivity(intent);
                 }
 
                 @Override
