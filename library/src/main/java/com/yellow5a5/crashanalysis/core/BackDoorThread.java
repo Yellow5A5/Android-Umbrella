@@ -1,15 +1,15 @@
-package com.yellow5a5.crashanalysis;
+package com.yellow5a5.crashanalysis.core;
 
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.yellow5a5.crashanalysis.Umbrella;
 import com.yellow5a5.crashanalysis.activity.UmbrellaCorporationActivity;
 import com.yellow5a5.crashanalysis.view.CrashInfoDialog;
 
@@ -89,8 +89,8 @@ class BackDoorThread extends Thread {
         }
         final CrashInfoDialog finalDialog = dialog;
         final String crashInfoSave = CrashInfoHelper.convertExceptionToStringSave(mCrashException);
-        final String path = CrashAnalysisCenter.getInstance().getCrashConfig().getLocalPath();
-        final String appName = CrashAnalysisCenter.getInstance().getCrashConfig().getAppName();
+        final String path = Umbrella.getInstance().getCrashConfig().getLocalPath();
+        final String appName = Umbrella.getInstance().getCrashConfig().getAppName();
         CrashInfoHelper.saveInfoLocal(path, appName, crashInfoSave, new CrashInfoSaveCallBack() {
             @Override
             public void onSuccess() {
@@ -107,7 +107,7 @@ class BackDoorThread extends Thread {
                 }
             }
         });
-        Log.e(CrashAnalysisCenter.class.getName(), crashInfoSave);
+        Log.e(Umbrella.class.getName(), crashInfoSave);
         if (mCrashListener != null) {
             mCrashListener.onCrash();
         }

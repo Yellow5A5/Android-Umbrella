@@ -1,8 +1,10 @@
-package com.yellow5a5.crashanalysis;
+package com.yellow5a5.crashanalysis.core;
 
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+
+import com.yellow5a5.crashanalysis.Umbrella;
 
 /**
  * Created by Yellow5A5 on 17/4/17.
@@ -11,7 +13,7 @@ import android.os.Bundle;
 public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        CrashAnalysisCenter.getInstance().registeredActivity(activity);
+        Umbrella.getInstance().registeredActivity(activity);
     }
 
     @Override
@@ -49,6 +51,6 @@ public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCall
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        CrashAnalysisCenter.getInstance().unRegisterActivity(activity);
+        Umbrella.getInstance().unRegisterActivity(activity);
     }
 }

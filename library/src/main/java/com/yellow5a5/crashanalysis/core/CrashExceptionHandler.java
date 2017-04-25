@@ -1,19 +1,17 @@
-package com.yellow5a5.crashanalysis;
+package com.yellow5a5.crashanalysis.core;
 
 import android.app.Activity;
-import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import com.yellow5a5.crashanalysis.Umbrella;
+
 import java.util.LinkedList;
 
 /**
  * Created by Yellow5A5 on 17/4/15.
  */
 
-class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
+public class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     private Thread mTargetThread;
     private LinkedList<Activity> mActvityList;
@@ -23,7 +21,7 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     private boolean isNeedRestartApp = false;
 
-    CrashExceptionHandler(Thread thread) {
+    public CrashExceptionHandler(Thread thread) {
         mTargetThread = thread;
         if (mTargetThread == null) {
             mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -40,15 +38,15 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
         }
     }
 
-    void setActList(LinkedList<Activity> list) {
+    public void setActList(LinkedList<Activity> list) {
         mActvityList = list;
     }
 
-    void setCrashListener(CrashListener l) {
+    public void setCrashListener(CrashListener l) {
         mCrashListener = l;
     }
 
-    void destory() {
+    public void destory() {
         if (mTargetThread == null) {
             Thread.setDefaultUncaughtExceptionHandler(mDefaultHandler);
         } else {
@@ -96,7 +94,7 @@ class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
             @Override
             public void onRestart() {
-                if(CrashAnalysisCenter.getInstance().getCrashConfig().isNeedRestartApp()){
+                if(Umbrella.getInstance().getCrashConfig().isNeedRestartApp()){
                     isNeedRestartApp = true;
                 }
 

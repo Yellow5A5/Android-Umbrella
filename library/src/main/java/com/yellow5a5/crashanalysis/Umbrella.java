@@ -5,6 +5,8 @@ import android.os.Looper;
 
 import com.yellow5a5.crashanalysis.config.CrashBaseConfit;
 import com.yellow5a5.crashanalysis.config.DefaultUmbrellaConfig;
+import com.yellow5a5.crashanalysis.core.CrashExceptionHandler;
+import com.yellow5a5.crashanalysis.core.CrashListener;
 
 import java.util.LinkedList;
 
@@ -12,7 +14,7 @@ import java.util.LinkedList;
  * Created by Yellow5A5 on 17/4/15.
  */
 
-public class CrashAnalysisCenter {
+public class Umbrella {
 
     private LinkedList<Activity> mActvityList = new LinkedList<>();
     private LinkedList<CrashExceptionHandler> mExHandlerList = new LinkedList<>();
@@ -20,14 +22,14 @@ public class CrashAnalysisCenter {
     private CrashBaseConfit mCrashConfig;
 
     private static class InstanceHolder {
-        private static CrashAnalysisCenter instance = new CrashAnalysisCenter();
+        private static Umbrella instance = new Umbrella();
     }
 
-    public static CrashAnalysisCenter getInstance() {
+    public static Umbrella getInstance() {
         return InstanceHolder.instance;
     }
 
-    private CrashAnalysisCenter() {
+    private Umbrella() {
     }
 
     public void setCustomCrashListener(CrashListener listener) {

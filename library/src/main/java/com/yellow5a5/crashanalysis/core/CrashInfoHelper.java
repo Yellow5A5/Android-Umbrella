@@ -1,4 +1,4 @@
-package com.yellow5a5.crashanalysis;
+package com.yellow5a5.crashanalysis.core;
 
 import android.app.Activity;
 import android.content.Context;

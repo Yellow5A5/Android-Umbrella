@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.yellow5a5.crashanalysis.CrashAnalysisCenter;
-
 public class MainActivity extends AppCompatActivity {
 
     private Button mBtn1;

@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yellow5a5.crashanalysis.adapter.CrashLogAdapter;
-import com.yellow5a5.crashanalysis.CrashAnalysisCenter;
+import com.yellow5a5.crashanalysis.Umbrella;
 import com.yellow5a5.crashanalysis.R;
 
 import java.io.File;
@@ -61,14 +61,14 @@ public class LogCenterFragment extends Fragment {
     }
 
     private void initData() {
-        File logDir = new File(CrashAnalysisCenter.getInstance().getCrashConfig().getLocalPath());
+        File logDir = new File(Umbrella.getInstance().getCrashConfig().getLocalPath());
         if (!logDir.exists() || !logDir.isDirectory()) {
             return;
         }
         File[] fileList = logDir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                String appName = CrashAnalysisCenter.getInstance().getCrashConfig().getAppName();
+                String appName = Umbrella.getInstance().getCrashConfig().getAppName();
                 if (TextUtils.isEmpty(appName) || pathname.toString().contains(appName)){
                 return true;
                 } else {
