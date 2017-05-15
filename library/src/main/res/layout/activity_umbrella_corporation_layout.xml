@@ -27,7 +27,8 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/umbrella_viewpager_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="66dp">
     </android.support.v4.view.ViewPager>
 
     <LinearLayout

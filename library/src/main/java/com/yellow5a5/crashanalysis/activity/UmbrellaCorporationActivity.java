@@ -25,7 +25,7 @@ public class UmbrellaCorporationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_umbrella_corporation);
+        setContentView(R.layout.activity_umbrella_corporation_layout);
         data.add(LogCenterFragment.newInstance());
         data.add(LogCenterFragment.newInstance());
         initView();

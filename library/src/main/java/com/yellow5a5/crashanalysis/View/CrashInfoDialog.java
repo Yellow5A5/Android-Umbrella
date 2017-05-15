@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
+import com.yellow5a5.crashanalysis.Umbrella;
 
 /**
  * Created by Yellow5A5 on 17/4/15.
@@ -22,7 +22,7 @@ public class CrashInfoDialog extends Dialog {
     private TextView mTitleTv;
     private TextView mCrashContentTv;
     private Button mLeftBtn;
-    private Button mShareBtn;
+    private Button mUmbreEnBtn;
     private ImageView mCloseV;
 
 
@@ -56,16 +56,20 @@ public class CrashInfoDialog extends Dialog {
         mTitleTv = (TextView) findViewById(R.id.dialog_crash_title);
         mCrashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
         mLeftBtn = (Button) view.findViewById(R.id.dialog_crash_restart_btn);
-        mShareBtn = (Button) view.findViewById(R.id.dialog_crash_share_btn);
+        mUmbreEnBtn = (Button) view.findViewById(R.id.dialog_crash_open_umbrella_btn);
         mCloseV = (ImageView) view.findViewById(R.id.dialog_crash_close_iv);
-        mShareBtn.setVisibility(View.VISIBLE);
+        if (Umbrella.getInstance().getCrashConfig().isOpenUmbrella()){
+            mUmbreEnBtn.setVisibility(View.VISIBLE);
+        } else {
+            mUmbreEnBtn.setVisibility(View.GONE);
+        }
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mCrashDialogCallback == null) {
                     return;
                 }
-                if (v == mShareBtn) {
+                if (v == mUmbreEnBtn) {
                     mCrashDialogCallback.onShareBtnClick();
                 } else if (v == mCloseV) {
                     mCrashDialogCallback.onCloseBtnClick();
@@ -77,7 +81,7 @@ public class CrashInfoDialog extends Dialog {
             }
         };
         mLeftBtn.setOnClickListener(listener);
-        mShareBtn.setOnClickListener(listener);
+        mUmbreEnBtn.setOnClickListener(listener);
         mCloseV.setOnClickListener(listener);
         mCrashContentTv.setHorizontallyScrolling(true);
         mCrashContentTv.setMovementMethod(ScrollingMovementMethod.getInstance());
@@ -114,7 +118,7 @@ public class CrashInfoDialog extends Dialog {
     }
 
     public void setRightClickable(boolean isClickable) {
-        mShareBtn.setClickable(isClickable);
+        mUmbreEnBtn.setClickable(isClickable);
     }
 
     public static class Builder {
@@ -142,9 +146,9 @@ public class CrashInfoDialog extends Dialog {
         private void setupView() {
             View view = LayoutInflater.from(context).inflate(R.layout.crash_dislay_layout, null, false);
             TextView crashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
-            final Button saveBtn = (Button) view.findViewById(R.id.dialog_crash_restart_btn);
-            final Button shareBtn = (Button) view.findViewById(R.id.dialog_crash_share_btn);
-            saveBtn.setClickable(false);
+            final Button restartBtn = (Button) view.findViewById(R.id.dialog_crash_restart_btn);
+            final Button umbrellaEnBtn = (Button) view.findViewById(R.id.dialog_crash_open_umbrella_btn);
+            restartBtn.setClickable(false);
             if (crashContent != null) {
                 crashContentTv.setText(crashContent);
             }

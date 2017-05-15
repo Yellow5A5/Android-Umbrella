@@ -3,6 +3,7 @@ package com.yellow5a5.crashanalysis.core;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.os.Environment;
 import android.text.TextUtils;
 
@@ -23,6 +24,12 @@ import java.util.Map;
 
 class CrashInfoHelper {
 
+    public static final String CRASH_CONTENT_TOP_INTERVAL = "<<=======================";
+    public static final String CRASH_CONTENT_BOTTOM_INTERVAL = "======================>>";
+    public static final String CRASH_CONTENT_SPACE_LEFT_INTERVAL = "   |  ";
+    public static final String CRASH_CONTENT_SPACE_RIGHT_INTERVAL = "   |  ";
+    public static final String CRASH_CONTENT_ITEM_INTERVAL = "——————————————————————————————————————————————————————————————";
+
     public static void saveInfoLocal(String path, String prefixFileName,String content, CrashInfoSaveCallBack callback) {
         if (TextUtils.isEmpty(content)) {
             callback.onFailture();
@@ -38,7 +45,7 @@ class CrashInfoHelper {
             if (!root.exists()) {
                 root.mkdirs();
             }
-            String currentTime = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+            String currentTime = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
             if (!TextUtils.isEmpty(prefixFileName)){
                 currentTime = prefixFileName + currentTime;
             }
@@ -57,12 +64,6 @@ class CrashInfoHelper {
             callback.onSuccess();
         }
     }
-
-    public static final String CRASH_CONTENT_TOP_INTERVAL = "<<=======================";
-    public static final String CRASH_CONTENT_BOTTOM_INTERVAL = "======================>>";
-    public static final String CRASH_CONTENT_SPACE_LEFT_INTERVAL = "   |  ";
-    public static final String CRASH_CONTENT_SPACE_RIGHT_INTERVAL = "   |  ";
-    public static final String CRASH_CONTENT_ITEM_INTERVAL = "——————————————————————————————————————————————————————————————";
 
     public static String convertExceptionToStringShow(Throwable throwable) {
         if (throwable == null) {
@@ -96,9 +97,22 @@ class CrashInfoHelper {
     }
 
     public static String getStackTraceAsString(Throwable throwable) {
-        StringWriter stringWriter = new StringWriter();
-        throwable.printStackTrace(new PrintWriter(stringWriter));
-        return stringWriter.toString();
+//        String trace = "";
+//        StringWriter stringWriter = new StringWriter();
+//        throwable.printStackTrace(new PrintWriter(stringWriter));
+//        return stringWriter.toString();
+        if (throwable == null) {
+            return "数据栈为空。";
+        }
+        StackTraceElement[] list = throwable.getStackTrace();
+        StringBuilder builder = new StringBuilder();
+        builder.append(throwable.toString());
+        builder.append("\n");
+        for (StackTraceElement element : list) {
+            builder.append(element.toString());
+            builder.append("\n");
+        }
+        return builder.toString();
     }
 
     public static void shareCrashInfo(String content, Context context) {
@@ -137,5 +151,14 @@ class CrashInfoHelper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static String getVersionName(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (Exception e) {
+            return "Unknown";
+        }
     }
 }

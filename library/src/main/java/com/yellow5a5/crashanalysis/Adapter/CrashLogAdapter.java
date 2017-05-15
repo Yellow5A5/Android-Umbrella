@@ -1,6 +1,9 @@
 package com.yellow5a5.crashanalysis.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
+import com.yellow5a5.crashanalysis.activity.LogDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +37,23 @@ public class CrashLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new LogViewHolder(LayoutInflater.from(mContext).inflate(R.layout.adapter_log_item_view, parent, false));
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_log_item_view, parent, false);
+        final LogViewHolder holder = new LogViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.position < mData.size()){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("PATH_DETAIL", mData.get(holder.position));
+                    Intent intent = new Intent(mContext, LogDetailActivity.class);
+                    intent.putExtras(bundle);
+                    if (mContext instanceof Activity){
+                        mContext.startActivity(intent);
+                    }
+                }
+            }
+        });
+        return holder;
     }
 
     @Override
@@ -42,6 +62,7 @@ public class CrashLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return;
         }
         LogViewHolder logHolder = (LogViewHolder) holder;
+        logHolder.position = position;
         logHolder.dateTimeView.setText(mData.get(position));
     }
 
@@ -60,8 +81,9 @@ public class CrashLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private static class LogViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView imageView;
-        private TextView dateTimeView;
+        int position;
+        ImageView imageView;
+        TextView dateTimeView;
 
         private LogViewHolder(View itemView) {
             super(itemView);

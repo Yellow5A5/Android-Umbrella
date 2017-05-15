@@ -68,6 +68,7 @@ class BackDoorThread extends Thread {
                 public void onShareBtnClick() {
 //                    CrashInfoHelper.shareCrashInfo(crashInfoShow, mActivity);
                     Intent intent = new Intent(mActivity, UmbrellaCorporationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mActivity.startActivity(intent);
                 }
 
@@ -88,7 +89,7 @@ class BackDoorThread extends Thread {
             });
         }
         final CrashInfoDialog finalDialog = dialog;
-        final String crashInfoSave = CrashInfoHelper.convertExceptionToStringSave(mCrashException);
+        final String crashInfoSave = CrashInfoHelper.convertExceptionToStringShow(mCrashException);
         final String path = Umbrella.getInstance().getCrashConfig().getLocalPath();
         final String appName = Umbrella.getInstance().getCrashConfig().getAppName();
         CrashInfoHelper.saveInfoLocal(path, appName, crashInfoSave, new CrashInfoSaveCallBack() {

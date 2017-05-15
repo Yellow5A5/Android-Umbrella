@@ -23,6 +23,10 @@ public class DemoApp extends Application {
                 //TODO...
             }
         });
+
+//        CustomActivityOnCrash.install(this);
+
+
 //        getMainLooper().getThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 //            @Override
 //            public void uncaughtException(Thread t, Throwable e) {

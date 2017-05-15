@@ -21,6 +21,10 @@ public abstract class CrashBaseConfit {
     //所需Crash拦截次数
     public abstract int onCrashInterruptCount();
 
+    //是否提供查看保护伞信息的入口
+    public abstract boolean isOpenUmbrella();
+
+
     //TODO Native Crash捕抓。
 
     //TODO ANR 捕抓

@@ -19,6 +19,7 @@ import com.yellow5a5.crashanalysis.R;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Yellow5A5 on 17/4/19.
@@ -69,20 +70,20 @@ public class LogCenterFragment extends Fragment {
             @Override
             public boolean accept(File pathname) {
                 String appName = Umbrella.getInstance().getCrashConfig().getAppName();
-                if (TextUtils.isEmpty(appName) || pathname.toString().contains(appName)){
-                return true;
+                if (TextUtils.isEmpty(appName) || pathname.toString().contains(appName)) {
+                    return true;
                 } else {
                     return false;
                 }
             }
         });
 
-
         ArrayList<String> data = new ArrayList<>();
-
         for (File item : fileList) {
             data.add(item.getName());
         }
+        Collections.reverse(data);
+
         mCrashLogAdapter = new CrashLogAdapter(getActivity());
         mLogRecycleView.setItemAnimator(new DefaultItemAnimator());
         mLogRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));

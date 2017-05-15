@@ -36,4 +36,9 @@ public class DefaultUmbrellaConfig extends CrashBaseConfit{
     public int onCrashInterruptCount() {
         return 0;
     }
+
+    @Override
+    public boolean isOpenUmbrella() {
+        return true;
+    }
 }
