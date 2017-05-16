@@ -13,6 +13,7 @@ import com.yellow5a5.crashanalysis.core.CrashInfoSaveCallBack;
 import com.yellow5a5.crashanalysis.core.DefaultTrackPageAdapter;
 import com.yellow5a5.crashanalysis.core.CrashExceptionHandler;
 import com.yellow5a5.crashanalysis.core.CrashListener;
+import com.yellow5a5.crashanalysis.core.WatchDog;
 
 import java.util.LinkedList;
 
@@ -23,16 +24,11 @@ import java.util.LinkedList;
 public class Umbrella {
 
     private Application mApp;
-    private Thread mWatchDog;
+    private WatchDog mWatchDog;
     private LinkedList<Activity> mActvityList = new LinkedList<>();
     private LinkedList<CrashExceptionHandler> mExHandlerList = new LinkedList<>();
     private CrashListener mCrashListener;
     private CrashBaseConfit mCrashConfig;
-
-    private int UI_ANR_TIMER_CHECKER = 3000;
-    private Handler dogHander;
-    private Handler mUIHandler = new Handler(Looper.myLooper());
-    private boolean isRunning = false;
 
     private static class InstanceHolder {
         private static Umbrella instance = new Umbrella();
@@ -95,64 +91,11 @@ public class Umbrella {
         return getInstance();
     }
 
-    public Umbrella openANRWatchDog() {
-        if (mWatchDog != null){
-            return getInstance();
+    public Umbrella openANRWatchDog(int interval) {
+        if (mWatchDog == null){
+            mWatchDog = new WatchDog(interval);
+            mWatchDog.start();
         }
-
-        final Runnable uiTask = new Runnable() {
-            @Override
-            public void run() {
-                isRunning = true;
-                Log.e(Umbrella.class.getName(), "UI run: " + isRunning);
-                mUIHandler.postDelayed(this, UI_ANR_TIMER_CHECKER);
-            }
-        };
-        mUIHandler.postDelayed(uiTask, UI_ANR_TIMER_CHECKER);
-
-        final Runnable dogTask = new Runnable() {
-            @Override
-            public void run() {
-                if (isRunning) {
-                    isRunning = false;
-                    Log.e(Umbrella.class.getName(), "Dog run: " + isRunning);
-                } else {
-                    Log.e(Umbrella.class.getName(), "run: App Not Response - 3000ms");
-                    StackTraceElement[] list = Looper.getMainLooper().getThread().getStackTrace();
-                    final String path = Umbrella.getInstance().getCrashConfig().getANRFilePath();
-                    final String appName = Umbrella.getInstance().getCrashConfig().getAppName();
-                    CrashInfoHelper.saveInfoLocal(path, appName, CrashInfoHelper.getStackTraceAsString(list), new CrashInfoSaveCallBack() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailture() {
-
-                        }
-                    });
-                }
-                dogHander.postDelayed(this, UI_ANR_TIMER_CHECKER);
-            }
-        };
-        mUIHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mWatchDog = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Looper.prepare();
-                        if (dogHander == null){
-                            dogHander = new Handler(Looper.myLooper());
-                        }
-                        dogHander.post(dogTask);
-                        Looper.loop();
-                    }
-                });
-                mWatchDog.start();
-            }
-        }, UI_ANR_TIMER_CHECKER + 100);
         return getInstance();
     }
 

@@ -16,7 +16,7 @@ public class DemoApp extends Application {
         super.onCreate();
         Umbrella.getInstance()
                 .inject(this)
-                .openANRWatchDog()
+                .openANRWatchDog(3000)
                 .trackingPageEvent()
                 .setTargetToMainThread();
         Umbrella.getInstance().setCustomCrashListener(new CrashListener() {
