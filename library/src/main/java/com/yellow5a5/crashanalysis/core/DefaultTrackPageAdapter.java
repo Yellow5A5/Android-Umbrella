@@ -10,7 +10,7 @@ import com.yellow5a5.crashanalysis.Umbrella;
  * Created by Yellow5A5 on 17/4/17.
  */
 
-public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCallbacks {
+public class DefaultTrackPageAdapter implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Umbrella.getInstance().registeredActivity(activity);
@@ -25,8 +25,6 @@ public class CrashAnalysisLcAdapter implements Application.ActivityLifecycleCall
         //TODO 加入线程ANR监听。
 
         //TODO 加入可配置的性能监听。
-
-        //TODO 对用户提供一个可以看到CrashLog的Act,随时查看。
     }
 
     @Override

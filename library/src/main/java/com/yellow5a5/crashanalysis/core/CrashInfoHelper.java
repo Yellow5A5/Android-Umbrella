@@ -22,7 +22,7 @@ import java.util.Map;
  * Created by Yellow5A5 on 17/4/16.
  */
 
-class CrashInfoHelper {
+public class CrashInfoHelper {
 
     public static final String CRASH_CONTENT_TOP_INTERVAL = "<<=======================";
     public static final String CRASH_CONTENT_BOTTOM_INTERVAL = "======================>>";
@@ -65,11 +65,21 @@ class CrashInfoHelper {
         }
     }
 
+
+
     public static String convertExceptionToStringShow(Throwable throwable) {
         if (throwable == null) {
             return "数据栈为空。";
         }
-        return getStackTraceAsString(throwable);
+        StackTraceElement[] list = throwable.getStackTrace();
+        StringBuilder builder = new StringBuilder();
+        builder.append(throwable.toString());
+        builder.append("\n");
+        for (StackTraceElement element : list) {
+            builder.append(element.toString());
+            builder.append("\n");
+        }
+        return builder.toString();
     }
 
     public static String convertExceptionToStringSave(Throwable throwable) {
@@ -96,18 +106,12 @@ class CrashInfoHelper {
         return builder.toString();
     }
 
-    public static String getStackTraceAsString(Throwable throwable) {
+    public static String getStackTraceAsString(StackTraceElement[] list) {
 //        String trace = "";
 //        StringWriter stringWriter = new StringWriter();
 //        throwable.printStackTrace(new PrintWriter(stringWriter));
 //        return stringWriter.toString();
-        if (throwable == null) {
-            return "数据栈为空。";
-        }
-        StackTraceElement[] list = throwable.getStackTrace();
         StringBuilder builder = new StringBuilder();
-        builder.append(throwable.toString());
-        builder.append("\n");
         for (StackTraceElement element : list) {
             builder.append(element.toString());
             builder.append("\n");

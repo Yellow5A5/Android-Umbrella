@@ -9,8 +9,11 @@ public abstract class CrashBaseConfit {
     //App名字,用于文件拼接,防止多App使用此库导致的问题。
     public abstract String getAppName();
 
-    //对外路径可配
-    public abstract String getLocalPath();
+    //Crash信息存放路径
+    public abstract String getCrashFilePath();
+
+    //ANR信息存放路径
+    public abstract String getANRFilePath();
 
     //是否开启App路径跟踪
     public abstract boolean isOpenActPath();
@@ -23,6 +26,8 @@ public abstract class CrashBaseConfit {
 
     //是否提供查看保护伞信息的入口
     public abstract boolean isOpenUmbrella();
+
+    public abstract boolean isNeedANRCatch();
 
 
     //TODO Native Crash捕抓。

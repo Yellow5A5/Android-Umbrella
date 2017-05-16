@@ -3,7 +3,6 @@ package com.yellow5a5.sample;
 import android.app.Application;
 
 import com.yellow5a5.crashanalysis.Umbrella;
-import com.yellow5a5.crashanalysis.core.CrashAnalysisLcAdapter;
 import com.yellow5a5.crashanalysis.core.CrashListener;
 
 /**
@@ -15,8 +14,11 @@ public class DemoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        registerActivityLifecycleCallbacks(new CrashAnalysisLcAdapter());
-        Umbrella.getInstance().setTargetToMainThread();
+        Umbrella.getInstance()
+                .inject(this)
+                .openANRWatchDog()
+                .trackingPageEvent()
+                .setTargetToMainThread();
         Umbrella.getInstance().setCustomCrashListener(new CrashListener() {
             @Override
             public void onCrash() {

@@ -62,7 +62,7 @@ public class LogCenterFragment extends Fragment {
     }
 
     private void initData() {
-        File logDir = new File(Umbrella.getInstance().getCrashConfig().getLocalPath());
+        File logDir = new File(Umbrella.getInstance().getCrashConfig().getCrashFilePath());
         if (!logDir.exists() || !logDir.isDirectory()) {
             return;
         }

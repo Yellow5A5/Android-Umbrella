@@ -12,7 +12,6 @@ import com.yellow5a5.crashanalysis.Umbrella;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,7 +104,7 @@ public class LogDetailActivity extends AppCompatActivity {
     }
 
     private ArrayList<String> getTextFromFile(String fileName) {
-        String realPath = Umbrella.getInstance().getCrashConfig().getLocalPath() + File.separator + fileName;
+        String realPath = Umbrella.getInstance().getCrashConfig().getCrashFilePath() + File.separator + fileName;
         ArrayList<String> list = new ArrayList<>();
         String line = null;
         try {

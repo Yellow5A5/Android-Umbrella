@@ -34,7 +34,7 @@ public class SecondActivity extends AppCompatActivity {
         });
 
 
-        File logDir = new File(Umbrella.getInstance().getCrashConfig().getLocalPath());
+        File logDir = new File(Umbrella.getInstance().getCrashConfig().getCrashFilePath());
         if (!logDir.exists() || !logDir.isDirectory()){
             return;
         }

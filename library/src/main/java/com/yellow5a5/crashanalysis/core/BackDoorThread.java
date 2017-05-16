@@ -90,7 +90,7 @@ class BackDoorThread extends Thread {
         }
         final CrashInfoDialog finalDialog = dialog;
         final String crashInfoSave = CrashInfoHelper.convertExceptionToStringShow(mCrashException);
-        final String path = Umbrella.getInstance().getCrashConfig().getLocalPath();
+        final String path = Umbrella.getInstance().getCrashConfig().getCrashFilePath();
         final String appName = Umbrella.getInstance().getCrashConfig().getAppName();
         CrashInfoHelper.saveInfoLocal(path, appName, crashInfoSave, new CrashInfoSaveCallBack() {
             @Override
