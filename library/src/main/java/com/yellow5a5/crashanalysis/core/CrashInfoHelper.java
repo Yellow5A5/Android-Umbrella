@@ -7,14 +7,19 @@ import android.content.pm.PackageInfo;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.yellow5a5.crashanalysis.Umbrella;
 import com.yellow5a5.crashanalysis.config.DefaultUmbrellaConfig;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -51,6 +56,7 @@ public class CrashInfoHelper {
             }
             File gpxfile = new File(root, currentTime + ".txt");
             FileWriter writer = new FileWriter(gpxfile, true);
+            content = Umbrella.getInstance().encryptString(content);
             writer.append(content);
             writer.flush();
             writer.close();
@@ -117,6 +123,28 @@ public class CrashInfoHelper {
             builder.append("\n");
         }
         return builder.toString();
+    }
+
+    public static ArrayList<String> getTextFromFile(String fileName) {
+        String realPath = Umbrella.getInstance().getCrashConfig().getCrashFilePath() + File.separator + fileName;
+        ArrayList<String> list = new ArrayList<>();
+        String line = null;
+        try {
+            FileReader fileReader =
+                    new FileReader(realPath);
+            BufferedReader bufferedReader =
+                    new BufferedReader(fileReader);
+            while ((line = bufferedReader.readLine()) != null) {
+                line = Umbrella.getInstance().decryptString(line);
+                list.add(line);
+                System.out.println(line);
+            }
+            bufferedReader.close();
+            return list;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return list;
     }
 
     public static void shareCrashInfo(String content, Context context) {

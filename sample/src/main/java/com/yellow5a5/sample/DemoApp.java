@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.yellow5a5.crashanalysis.Umbrella;
 import com.yellow5a5.crashanalysis.core.CrashListener;
+import com.yellow5a5.crashanalysis.core.IEncryptionCallback;
 
 /**
  * Created by Yellow5A5 on 17/4/17.
@@ -18,7 +19,20 @@ public class DemoApp extends Application {
                 .inject(this)
                 .openANRWatchDog(3000)
                 .trackingPageEvent()
-                .setTargetToMainThread();
+                .setTargetToMainThread()
+                .setEncryptionMethod(new IEncryptionCallback() {
+                    @Override
+                    public String onEncryptionAlgorithm(String origin) {
+                        //加密方法
+                        return origin;
+                    }
+
+                    @Override
+                    public String onDecryptionAalgorithm(String cipher) {
+                        //解密方法
+                        return cipher;
+                    }
+                });
         Umbrella.getInstance().setCustomCrashListener(new CrashListener() {
             @Override
             public void onCrash() {

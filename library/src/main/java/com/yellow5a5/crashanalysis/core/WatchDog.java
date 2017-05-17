@@ -18,7 +18,7 @@ public class WatchDog extends Thread{
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.what == ANR_MESSAGE_TYEP_FLAG){
-                Log.e(Umbrella.class.getName(), "UI run: " + isRunning);
+                Log.d(Umbrella.class.getName(), "UI run: " + isRunning);
             }
             return false;
         }
@@ -34,7 +34,7 @@ public class WatchDog extends Thread{
         public void run() {
             if (mUIHandler.hasMessages(ANR_MESSAGE_TYEP_FLAG)){
                 mUIHandler.removeMessages(ANR_MESSAGE_TYEP_FLAG);
-                Log.e(Umbrella.class.getName(), "run: App Not Response - 3000ms");
+                Log.d(Umbrella.class.getName(), "run: App Not Response - 3000ms");
                 StackTraceElement[] list = Looper.getMainLooper().getThread().getStackTrace();
                 final String path = Umbrella.getInstance().getCrashConfig().getANRFilePath();
                 final String appName = Umbrella.getInstance().getCrashConfig().getAppName();
@@ -51,7 +51,7 @@ public class WatchDog extends Thread{
                 });
             } else {
                 isRunning = false;
-                Log.e(Umbrella.class.getName(), "Dog run: " + isRunning);
+                Log.d(Umbrella.class.getName(), "Dog run: " + isRunning);
             }
             mUIHandler.sendEmptyMessageDelayed(ANR_MESSAGE_TYEP_FLAG, 0);
             //FIXME 细分监测 否则在临界状态下最多会为设定时间的2倍。

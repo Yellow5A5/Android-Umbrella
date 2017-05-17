@@ -13,6 +13,7 @@ import com.yellow5a5.crashanalysis.core.CrashInfoSaveCallBack;
 import com.yellow5a5.crashanalysis.core.DefaultTrackPageAdapter;
 import com.yellow5a5.crashanalysis.core.CrashExceptionHandler;
 import com.yellow5a5.crashanalysis.core.CrashListener;
+import com.yellow5a5.crashanalysis.core.IEncryptionCallback;
 import com.yellow5a5.crashanalysis.core.WatchDog;
 
 import java.util.LinkedList;
@@ -155,5 +156,28 @@ public class Umbrella {
     public Umbrella setCrashConfig(CrashBaseConfit mCrashConfig) {
         this.mCrashConfig = mCrashConfig;
         return getInstance();
+    }
+
+    private IEncryptionCallback mIEncryptionCallback;
+
+    public Umbrella setEncryptionMethod(IEncryptionCallback method){
+        mIEncryptionCallback = method;
+        return getInstance();
+    }
+
+    public String encryptString(String origin){
+        if (mIEncryptionCallback != null){
+            return mIEncryptionCallback.onEncryptionAlgorithm(origin);
+         } else {
+            return origin;
+        }
+    }
+
+    public String decryptString(String cipher){
+        if (mIEncryptionCallback != null){
+            return mIEncryptionCallback.onDecryptionAalgorithm(cipher);
+        } else {
+            return cipher;
+        }
     }
 }

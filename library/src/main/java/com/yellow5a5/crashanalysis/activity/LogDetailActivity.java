@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
 import com.yellow5a5.crashanalysis.Umbrella;
+import com.yellow5a5.crashanalysis.core.CrashInfoHelper;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,7 +53,7 @@ public class LogDetailActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mContent = getTextFromFile(mPath);
+                mContent = CrashInfoHelper.getTextFromFile(mPath);
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -101,27 +102,5 @@ public class LogDetailActivity extends AppCompatActivity {
         }
         logdetaillinetext.setText(builder);
 
-    }
-
-    private ArrayList<String> getTextFromFile(String fileName) {
-        String realPath = Umbrella.getInstance().getCrashConfig().getCrashFilePath() + File.separator + fileName;
-        ArrayList<String> list = new ArrayList<>();
-        String line = null;
-        try {
-            FileReader fileReader =
-                    new FileReader(realPath);
-            BufferedReader bufferedReader =
-                    new BufferedReader(fileReader);
-
-            while ((line = bufferedReader.readLine()) != null) {
-                list.add(line);
-                System.out.println(line);
-            }
-            bufferedReader.close();
-            return list;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return list;
     }
 }

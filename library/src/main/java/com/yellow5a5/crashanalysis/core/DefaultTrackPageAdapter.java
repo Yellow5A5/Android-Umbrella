@@ -21,9 +21,6 @@ public class DefaultTrackPageAdapter implements Application.ActivityLifecycleCal
         //TODO 通过Class +  方法映射Type去记录操作路径,
         //TODO 另外对外公开可输入日志的方法,让使用者能够自己输入crash产生的路径。
         //怕字符串缓存过大可以针对小字符进行缓存,超过缓存在进行读写复制。
-
-        //TODO 加入线程ANR监听。
-
         //TODO 加入可配置的性能监听。
     }
 
