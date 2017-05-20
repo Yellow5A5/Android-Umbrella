@@ -6,8 +6,18 @@ package com.yellow5a5.crashanalysis.core;
 
 public interface IEncryptionCallback {
 
+    /**
+     * 加密方法
+     * @param origin
+     * @return
+     */
     String onEncryptionAlgorithm(String origin);
 
+    /**
+     * 解密方法
+     * @param cipher
+     * @return
+     */
     String onDecryptionAalgorithm(String cipher);
 
 }

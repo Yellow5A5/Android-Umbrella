@@ -8,6 +8,9 @@
     <string name="dialog_crash_success_title">Crash Info(Save Successfully)</string>
     <string name="dialog_crash_failture_title">Crash Info(Save Failture)</string>
 
+    <string name="dialog_anr_title">ANR Info</string>
+    <string name="dialog_anr_btn_wait_text">Waiting</string>
+    <string name="dialog_anr_btn_cancel_text">Cancel</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

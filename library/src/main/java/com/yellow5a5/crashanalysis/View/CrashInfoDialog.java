@@ -144,7 +144,7 @@ public class CrashInfoDialog extends Dialog {
         }
 
         private void setupView() {
-            View view = LayoutInflater.from(context).inflate(R.layout.crash_dislay_layout, null, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.dialog_crash_dislay_layout, null, false);
             TextView crashContentTv = (TextView) view.findViewById(R.id.dialog_crash_content_text);
             final Button restartBtn = (Button) view.findViewById(R.id.dialog_crash_restart_btn);
             final Button umbrellaEnBtn = (Button) view.findViewById(R.id.dialog_crash_open_umbrella_btn);
