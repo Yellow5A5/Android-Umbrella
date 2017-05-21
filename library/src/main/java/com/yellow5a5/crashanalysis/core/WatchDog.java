@@ -109,7 +109,7 @@ public class WatchDog extends Thread{
         if (mDogHander == null){
             mDogHander = new Handler(Looper.myLooper());
         }
-        mDogHander.postDelayed(dogTask, mPrecisionBlockTimes + 100);
+        mDogHander.postDelayed(dogTask, mBolckInterval + 100);
         Looper.loop();
     }
 }
