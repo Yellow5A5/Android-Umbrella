@@ -2,7 +2,10 @@ package com.yellow5a5.crashanalysis.core;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.yellow5a5.crashanalysis.Umbrella;
 
@@ -14,6 +17,12 @@ public class DefaultTrackPageAdapter implements Application.ActivityLifecycleCal
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Umbrella.getInstance().registeredActivity(activity);
+
+        //如果开启监控模式的话.
+        activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
     }
 
     @Override

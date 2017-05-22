@@ -17,6 +17,7 @@ public class DemoApp extends Application {
         super.onCreate();
         Umbrella.getInstance()
                 .inject(this)
+                .openMonitor()
                 .openANRWatchDog(3000)
                 .trackingPageEvent()
                 .setTargetToMainThread()

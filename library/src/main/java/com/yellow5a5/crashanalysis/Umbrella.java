@@ -15,6 +15,7 @@ import com.yellow5a5.crashanalysis.core.CrashExceptionHandler;
 import com.yellow5a5.crashanalysis.core.CrashListener;
 import com.yellow5a5.crashanalysis.core.IEncryptionCallback;
 import com.yellow5a5.crashanalysis.core.WatchDog;
+import com.yellow5a5.crashanalysis.monitor.MonitorRack;
 
 import java.util.LinkedList;
 
@@ -26,6 +27,7 @@ public class Umbrella {
 
     private Application mApp;
     private WatchDog mWatchDog;
+    private MonitorRack mMonitorRack;
     private LinkedList<Activity> mActvityList = new LinkedList<>();
     private LinkedList<CrashExceptionHandler> mExHandlerList = new LinkedList<>();
     private CrashListener mCrashListener;
@@ -44,6 +46,14 @@ public class Umbrella {
 
     public Umbrella inject(Application app){
         mApp = app;
+        return getInstance();
+    }
+
+    public Umbrella openMonitor(){
+        if (mMonitorRack == null && mApp != null){
+            mMonitorRack = new MonitorRack(mApp);
+            mMonitorRack.startNotify();
+        }
         return getInstance();
     }
 
