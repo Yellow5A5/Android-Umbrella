@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.yellow5a5.crashanalysis.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class MonitorRack {
 
     void createAMonitorView() {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-//        mMonitorWindow = inflater.inflate(R.layout.window_monitor_layout, null);
+        mMonitorWindow = inflater.inflate(R.layout.window_monitor_layout, null);
         mInflater = LayoutInflater.from(mContext);
 
         //Window Install.
@@ -52,7 +54,7 @@ public class MonitorRack {
         initOrzByConfig();
 
         //DetailView Install.
-//        installDetailPager();
+        installDetailPager();
 
         //Start update.
         mHandle.postDelayed(new Runnable() {
@@ -81,20 +83,21 @@ public class MonitorRack {
         mWindowManager = (WindowManager) (mContext.getApplicationContext()).getSystemService(mContext.getApplicationContext().WINDOW_SERVICE);
         mWindowManager.getDefaultDisplay().getMetrics(metrics);
         //设置window type
-        mWindowLayoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-        //设置图片格式，效果为背景透明
+        mWindowLayoutParams.type = WindowManager.LayoutParams.TYPE_TOAST;
         mWindowLayoutParams.format = PixelFormat.RGBA_8888;
-        //设置浮动窗口不可聚焦（实现操作除浮动窗口外的其他可见窗口的操作）
-        mWindowLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-        //调整悬浮窗显示的停靠位置为左侧置顶
+        mWindowLayoutParams.flags = // Allows the view to be on top of the StatusBar
+                // Keeps the button presses from going to the background window
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                        // Enables the notification to recieve touch events
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
+                        // Draws over status bar
+                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         mWindowLayoutParams.gravity = Gravity.LEFT | Gravity.TOP;
-        // 以屏幕左上角为原点，设置x、y初始值，相对于gravity
         mWindowLayoutParams.x = 0;
         mWindowLayoutParams.y = 0;
-
-        //设置悬浮窗口长宽数据
         mWindowLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         mWindowLayoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
     }
 
     private void initOrzByConfig() {
