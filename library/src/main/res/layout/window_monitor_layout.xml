@@ -64,4 +64,21 @@
         android:textColor="#52A2D2"
         android:textSize="12sp" />
 
+    <ImageView
+        android:id="@+id/window_monitor_network_tips"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/window_monitor_network_image" />
+
+    <TextView
+        android:id="@+id/window_monitor_newwork_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="66%"
+        android:textColor="#52A2D2"
+        android:textSize="12sp" />
+
 </LinearLayout>

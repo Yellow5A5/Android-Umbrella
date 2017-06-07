@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
-import com.yellow5a5.crashanalysis.activity.LogDetailActivity;
+import com.yellow5a5.crashanalysis.activity.CrashDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class CrashLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 if (holder.position < mData.size()){
                     Bundle bundle = new Bundle();
                     bundle.putString("PATH_DETAIL", mData.get(holder.position));
-                    Intent intent = new Intent(mContext, LogDetailActivity.class);
+                    Intent intent = new Intent(mContext, CrashDetailActivity.class);
                     intent.putExtras(bundle);
                     if (mContext instanceof Activity){
                         mContext.startActivity(intent);

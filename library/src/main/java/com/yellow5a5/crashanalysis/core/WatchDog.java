@@ -47,18 +47,19 @@ public class WatchDog extends Thread{
             if (mUIHandler.hasMessages(ANR_MESSAGE_TYEP_FLAG)){
                 mUIHandler.removeMessages(ANR_MESSAGE_TYEP_FLAG);
                 mPrecisionBlockTimes++;
-                Log.e(WatchDog.class.getName(), "dog run: " + isRunning);
                 if (mPrecisionBlockTimes * mBlockPrecision > mBolckInterval){
                     StackTraceElement[] list = Looper.getMainLooper().getThread().getStackTrace();
                     String anrInfo = CrashInfoHelper.getStackTraceAsString(list);
-                    Log.e(WatchDog.class.getName(), "ANR-INFO: " + anrInfo);
                     Activity topActivity = CrashInfoHelper.getForegroundActivity();
-                    if (topActivity != null && !isAnrDialogShown) {
-                        ANRInfoDialog dialog = new ANRInfoDialog.Builder(topActivity)
-                                .setAnrContent(anrInfo)
-                                .build();
-                        dialog.show();
-                        isAnrDialogShown = true;
+                    if (!isAnrDialogShown && !Umbrella.getInstance().isCrashNowFlag()) {
+                        if (topActivity != null){
+                            ANRInfoDialog dialog = new ANRInfoDialog.Builder(topActivity)
+                                    .setAnrContent(anrInfo)
+                                    .build();
+                            dialog.show();
+                            isAnrDialogShown = true;
+                        }
+                        Log.e(WatchDog.class.getName(), "ANR-INFO: " + anrInfo);
                     }
 
                     //TODO ANR信息是否要存储。
@@ -77,7 +78,6 @@ public class WatchDog extends Thread{
 //                });
                 }
             } else {
-                Log.e(WatchDog.class.getName(), "dog run: " + isRunning);
                 mPrecisionBlockTimes = 0;
                 isRunning = false;
             }

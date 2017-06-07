@@ -2,6 +2,7 @@ package com.yellow5a5.crashanalysis.monitor;
 
 import android.os.Build;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Choreographer;
 
@@ -12,7 +13,6 @@ import android.view.Choreographer;
 
 public class FpsOrz extends IOrz {
 
-    private Handler mHandler;
     private boolean isStartMonitoring;
 
 
@@ -26,17 +26,21 @@ public class FpsOrz extends IOrz {
             isStartMonitoring = true;
             setFrameCallback();
         }
-    }
-
-    public void injectHandler(Handler handler) {
-        mHandler = handler;
+        sHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mBindView != null) {
+                    mBindView.setText(String.valueOf(mData.getPercentList().get()));
+                }
+            }
+        });
     }
 
     private void setFrameCallback() {
-        mHandler.post(new Runnable() {
+        sHandler.post(new Runnable() {
             @Override
             public void run() {
-                Log.e(FpsOrz.class.getName(), "setFrameCallback: ");
+                Log.d(FpsOrz.class.getName(), "setFrameCallback: ");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
                         @Override
@@ -44,8 +48,8 @@ public class FpsOrz extends IOrz {
                             if (!FpsMonitor.getInstance().isTimeToReset(frameTimeNanos)) {
                                 FpsMonitor.getInstance().calculateRemainTime(frameTimeNanos);
                             } else {
-                                Log.e(FpsOrz.class.getName(), "doFrame: " + FpsMonitor.getInstance().getFps());
-                                mData.getPercentList().add(FpsMonitor.getInstance().getFps());
+                                Log.d(FpsOrz.class.getName(), "doFrame: " + FpsMonitor.getInstance().getFps());
+                                mData.getPercentList().push((float) FpsMonitor.getInstance().getFps());
                                 FpsMonitor.getInstance().resetFps();
                             }
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

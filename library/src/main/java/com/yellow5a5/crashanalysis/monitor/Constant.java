@@ -9,4 +9,5 @@ public class Constant {
     public static final int TYPE_CPU = 1;
     public static final int TYPE_FPS = 2;
     public static final int TYPE_MEMORY = 3;
+    public static final int TYPE_NETWORK = 4;
 }

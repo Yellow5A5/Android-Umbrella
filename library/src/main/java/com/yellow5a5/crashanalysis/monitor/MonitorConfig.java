@@ -44,6 +44,7 @@ public class MonitorConfig {
         orzState.add(Constant.TYPE_CPU);
         orzState.add(Constant.TYPE_MEMORY);
         orzState.add(Constant.TYPE_FPS);
+        orzState.add(Constant.TYPE_NETWORK);
         timeBlock = 1000;
         return this;
     }

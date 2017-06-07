@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Yellow5A5 on 17/3/3.
  */
 
-public class AppStateData {
+public class AppStateData<T> {
 
     public AppStateData(int type, String title) {
         this.type = type;
@@ -18,7 +18,7 @@ public class AppStateData {
 
     private String title;
 
-    private List<Integer> percentList;
+    private FixedQueue<T> percentList;
 
     public int getType() {
         return type;
@@ -36,14 +36,14 @@ public class AppStateData {
         this.title = title;
     }
 
-    public List<Integer> getPercentList() {
+    public FixedQueue<T> getPercentList() {
         if (percentList == null){
-            percentList = new ArrayList<>();
+            percentList = new FixedQueue<T>(30);
         }
         return percentList;
     }
 
-    public void setPercentList(List<Integer> percentList) {
+    public void setPercentList(FixedQueue<T> percentList) {
         this.percentList = percentList;
     }
 }

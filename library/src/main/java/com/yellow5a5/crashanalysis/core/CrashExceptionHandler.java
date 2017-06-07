@@ -66,6 +66,7 @@ public class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(final Thread t, final Throwable e) {
+        Umbrella.getInstance().setCrashNowFlag(true);
         isNeedRestartApp = false;
         Activity act = mActvityList.isEmpty() ? CrashInfoHelper.getForegroundActivity() : mActvityList.getLast();
         mBackDoorThread = new BackDoorThread(act);
@@ -95,6 +96,7 @@ public class CrashExceptionHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void onRestart() {
                 if(Umbrella.getInstance().getCrashConfig().isNeedRestartApp()){
+                    Umbrella.getInstance().setCrashNowFlag(false);
                     isNeedRestartApp = true;
                 }
 

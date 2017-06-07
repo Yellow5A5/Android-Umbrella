@@ -33,6 +33,8 @@ public class Umbrella {
     private CrashListener mCrashListener;
     private CrashBaseConfit mCrashConfig;
 
+    private boolean isCrashNowFlag;
+
     private static class InstanceHolder {
         private static Umbrella instance = new Umbrella();
     }
@@ -166,6 +168,14 @@ public class Umbrella {
     public Umbrella setCrashConfig(CrashBaseConfit mCrashConfig) {
         this.mCrashConfig = mCrashConfig;
         return getInstance();
+    }
+
+    public boolean isCrashNowFlag() {
+        return isCrashNowFlag;
+    }
+
+    public void setCrashNowFlag(boolean crashNowFlag) {
+        isCrashNowFlag = crashNowFlag;
     }
 
     private IEncryptionCallback mIEncryptionCallback;

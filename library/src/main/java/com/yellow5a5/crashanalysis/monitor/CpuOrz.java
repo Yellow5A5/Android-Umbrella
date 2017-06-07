@@ -19,7 +19,15 @@ public class CpuOrz extends IOrz {
     @Override
     public void update() {
         int percent = getProcessCpuRate();
-        mData.getPercentList().add(percent);
+        mData.getPercentList().push((float) percent);
+        sHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mBindView != null) {
+                    mBindView.setText(String.valueOf(mData.getPercentList().get() + "%"));
+                }
+            }
+        });
     }
 
     /** get CPU rate
@@ -37,17 +45,13 @@ public class CpuOrz extends IOrz {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while ((Result = br.readLine()) != null) {
-                Log.e(CpuOrz.class.getName(), Result);
+                Log.d(CpuOrz.class.getName(), Result);
                 if (Result.trim().length() < 1) {
                     continue;
                 } else {
                     String[] CPUusr = Result.split("%");
-                    tv.append("USER:" + CPUusr[0] + "\n");
                     String[] CPUusage = CPUusr[0].split("User");
                     String[] SYSusage = CPUusr[1].split("System");
-                    tv.append("CPU:" + CPUusage[1].trim() + " length:" + CPUusage[1].trim().length() + "\n");
-                    tv.append("SYS:" + SYSusage[1].trim() + " length:" + SYSusage[1].trim().length() + "\n");
-
                     rate = Integer.parseInt(CPUusage[1].trim()) + Integer.parseInt(SYSusage[1].trim());
                     break;
                 }
@@ -56,7 +60,7 @@ public class CpuOrz extends IOrz {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(rate + "");
+
         return rate;
     }
 }

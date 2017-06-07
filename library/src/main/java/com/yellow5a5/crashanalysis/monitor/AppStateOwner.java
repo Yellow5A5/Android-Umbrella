@@ -1,5 +1,11 @@
 package com.yellow5a5.crashanalysis.monitor;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+
+import com.yellow5a5.crashanalysis.Umbrella;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -11,6 +17,8 @@ import java.util.TimerTask;
 
 public class AppStateOwner implements Subject {
 
+    private Thread mMonitorThread;
+    private Handler mMonitorHandler;
     private List<IOrz> mObsList = new ArrayList<>();
     private List<AppStateData> mDataList = new ArrayList<>();
 
@@ -38,13 +46,23 @@ public class AppStateOwner implements Subject {
         }
     }
 
-    public void start(int timeBlock){
-        Timer timer =new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+    public void start(final int timeBlock){
+        final Runnable updateTask =new Runnable() {
             @Override
             public void run() {
                 notifyObservers();
+                mMonitorHandler.postDelayed(this, timeBlock);
             }
-        }, 0, timeBlock);
+        };
+        mMonitorThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                mMonitorHandler = new Handler(Looper.myLooper());
+                mMonitorHandler.postDelayed(updateTask, timeBlock);
+                Looper.loop();
+            }
+        });
+        mMonitorThread.start();
     }
 }

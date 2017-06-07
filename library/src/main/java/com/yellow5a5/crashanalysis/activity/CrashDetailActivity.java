@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Created by Yellow5A5 on 17/4/25.
  */
 
-public class LogDetailActivity extends AppCompatActivity {
+public class CrashDetailActivity extends AppCompatActivity {
 
 
     private TextView logdetailexceptiontip;

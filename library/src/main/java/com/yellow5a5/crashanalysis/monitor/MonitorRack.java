@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
 
@@ -25,6 +26,11 @@ public class MonitorRack {
     private WindowManager.LayoutParams mWindowLayoutParams;
     private WindowManager mWindowManager;
     private LayoutInflater mInflater;
+    private TextView mCpuTv;
+    private TextView mRamTv;
+    private TextView mFpsTv;
+    private TextView mNetworkTv;
+
     private DisplayMetrics metrics = new DisplayMetrics();
 
     private List<View> mViewList = new ArrayList<>();
@@ -42,7 +48,12 @@ public class MonitorRack {
     void createAMonitorView() {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         mMonitorWindow = inflater.inflate(R.layout.window_monitor_layout, null);
+        mFpsTv = (TextView) mMonitorWindow.findViewById(R.id.window_monitor_fps_tv);
+        mCpuTv = (TextView) mMonitorWindow.findViewById(R.id.window_monitor_cpu_tv);
+        mRamTv = (TextView) mMonitorWindow.findViewById(R.id.window_monitor_ram_tv);
+        mNetworkTv = (TextView) mMonitorWindow.findViewById(R.id.window_monitor_newwork_tv);
         mInflater = LayoutInflater.from(mContext);
+
 
         //Window Install.
         initLayoutParams();
@@ -57,12 +68,12 @@ public class MonitorRack {
         installDetailPager();
 
         //Start update.
-        mHandle.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mHandle.postDelayed(this, mConfig.getTimeBlock());
-            }
-        }, mConfig.getTimeBlock());
+//        mHandle.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mHandle.postDelayed(this, mConfig.getTimeBlock());
+//            }
+//        }, mConfig.getTimeBlock());
     }
 
     void setConfig(MonitorConfig config) {
@@ -105,20 +116,26 @@ public class MonitorRack {
             switch (type) {
                 case Constant.TYPE_CPU:
                     CpuOrz cpuObs = new CpuOrz(Constant.TYPE_CPU, "CPU");
+                    cpuObs.bindView(mCpuTv);
                     mQueue.registerObserver(cpuObs);
                     mListData.add(cpuObs.getData());
                     break;
                 case Constant.TYPE_MEMORY:
                     MemOrz memObs = new MemOrz(Constant.TYPE_MEMORY, "MEM");
+                    memObs.bindView(mRamTv);
                     mQueue.registerObserver(memObs);
                     mListData.add(memObs.getData());
                     break;
                 case Constant.TYPE_FPS:
                     FpsOrz fpsOrz = new FpsOrz(Constant.TYPE_FPS, "FPS");
-                    fpsOrz.injectHandler(mHandle);
+                    fpsOrz.bindView(mFpsTv);
                     mQueue.registerObserver(fpsOrz);
                     mListData.add(fpsOrz.getData());
                     break;
+                case Constant.TYPE_NETWORK:
+                    NetworkOrz networkOrz = new NetworkOrz(Constant.TYPE_NETWORK, "SPEED");
+                    mQueue.registerObserver(networkOrz);
+                    networkOrz.bindView(mNetworkTv);
             }
         }
     }

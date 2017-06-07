@@ -12,7 +12,7 @@
             android:process=":umbrella_activity" />
 
         <activity
-            android:name=".activity.LogDetailActivity"
+            android:name=".activity.CrashDetailActivity"
             android:process=":umbrella_activity" />
     </application>
 
