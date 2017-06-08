@@ -29,8 +29,5 @@ public abstract class CrashBaseConfit {
 
     public abstract boolean isNeedANRCatch();
 
-
     //TODO Native Crash捕抓。
-
-    //TODO ANR 捕抓
 }

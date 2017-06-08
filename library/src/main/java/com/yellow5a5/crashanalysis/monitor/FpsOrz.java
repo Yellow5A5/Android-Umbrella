@@ -29,8 +29,8 @@ public class FpsOrz extends IOrz {
         sHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (mBindView != null) {
-                    mBindView.setText(String.valueOf(mData.getPercentList().get()));
+                if (mBindView != null && mData.getPercentList().get() != null) {
+                    mBindView.setText(String.valueOf((mData.getPercentList().get().intValue())));
                 }
             }
         });
