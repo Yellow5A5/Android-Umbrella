@@ -2,14 +2,10 @@ package com.yellow5a5.crashanalysis;
 
 import android.app.Activity;
 import android.app.Application;
-import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.yellow5a5.crashanalysis.config.CrashBaseConfit;
 import com.yellow5a5.crashanalysis.config.DefaultUmbrellaConfig;
-import com.yellow5a5.crashanalysis.core.CrashInfoHelper;
-import com.yellow5a5.crashanalysis.core.CrashInfoSaveCallBack;
 import com.yellow5a5.crashanalysis.core.DefaultTrackPageAdapter;
 import com.yellow5a5.crashanalysis.core.CrashExceptionHandler;
 import com.yellow5a5.crashanalysis.core.CrashListener;
