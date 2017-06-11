@@ -65,11 +65,13 @@ class BackDoorThread extends Thread {
                 }
 
                 @Override
-                public void onShareBtnClick() {
-//                    CrashInfoHelper.shareCrashInfo(crashInfoShow, mActivity);
+                public void onUmbrellaActBtnClick() {
                     Intent intent = new Intent(mActivity, UmbrellaCorporationActivity.class);
+                    intent.putExtra("process_id", android.os.Process.myPid());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     mActivity.startActivity(intent);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(10);
                 }
 
                 @Override

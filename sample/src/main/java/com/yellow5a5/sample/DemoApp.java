@@ -19,8 +19,7 @@ public class DemoApp extends Application {
                 .inject(this)
                 .openMonitor()
                 .openANRWatchDog(3000)
-                .trackingPageEvent()
-                .setTargetToMainThread()
+                .setTargetToDefaultThread()
                 .setEncryptionMethod(new IEncryptionCallback() {
                     @Override
                     public String onEncryptionAlgorithm(String origin) {

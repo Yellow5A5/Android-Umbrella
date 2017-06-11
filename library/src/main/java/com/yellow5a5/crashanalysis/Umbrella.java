@@ -51,6 +51,8 @@ public class Umbrella {
         if (mMonitorRack == null && mApp != null){
             mMonitorRack = new MonitorRack(mApp);
             mMonitorRack.startNotify();
+            //TODO REMOVE
+            trackingPageEvent();
         }
         return getInstance();
     }

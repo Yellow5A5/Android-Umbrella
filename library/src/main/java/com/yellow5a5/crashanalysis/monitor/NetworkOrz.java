@@ -47,7 +47,7 @@ public class NetworkOrz extends IOrz {
 
 //        Log.d(NetworkOrz.class.getName(), "update: mIntervalTime " + mIntervalTime);
 //        Log.d(NetworkOrz.class.getName(), "update: diffBytes " + diffBytes);
-        Log.d(NetworkOrz.class.getName(), "update: speedKb  " + speedKb);
+//        Log.d(NetworkOrz.class.getName(), "update: speedKb  " + speedKb);
         mPreTotalBytes = currentBytes;
         mData.getPercentList().push(speedKb);
 

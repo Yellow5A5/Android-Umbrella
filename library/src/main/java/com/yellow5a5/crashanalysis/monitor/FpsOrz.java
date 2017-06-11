@@ -40,7 +40,6 @@ public class FpsOrz extends IOrz {
         sHandler.post(new Runnable() {
             @Override
             public void run() {
-                Log.d(FpsOrz.class.getName(), "setFrameCallback: ");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
                         @Override
@@ -48,7 +47,6 @@ public class FpsOrz extends IOrz {
                             if (!FpsMonitor.getInstance().isTimeToReset(frameTimeNanos)) {
                                 FpsMonitor.getInstance().calculateRemainTime(frameTimeNanos);
                             } else {
-                                Log.d(FpsOrz.class.getName(), "doFrame: " + FpsMonitor.getInstance().getFps());
                                 mData.getPercentList().push((float) FpsMonitor.getInstance().getFps());
                                 FpsMonitor.getInstance().resetFps();
                             }

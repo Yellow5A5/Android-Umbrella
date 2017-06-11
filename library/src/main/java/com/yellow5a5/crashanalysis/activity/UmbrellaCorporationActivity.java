@@ -20,12 +20,14 @@ public class UmbrellaCorporationActivity extends AppCompatActivity {
     private LinearLayout mSettingLl;
     private ViewPager mViewPage;
 
+    private int mMainProcessId;
     private ArrayList<Fragment> data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_umbrella_corporation_layout);
+        mMainProcessId = getIntent().getIntExtra("process_id" , 0);
         data.add(LogCenterFragment.newInstance());
 //        data.add(LogCenterFragment.newInstance());
         initView();
@@ -73,5 +75,10 @@ public class UmbrellaCorporationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

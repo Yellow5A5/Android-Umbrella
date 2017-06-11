@@ -25,7 +25,6 @@ public class WatchDog extends Thread{
         @Override
         public boolean handleMessage(Message msg) {
             if (msg.what == ANR_MESSAGE_TYEP_FLAG){
-                Log.d(Umbrella.class.getName(), "UI run: " + isRunning);
             }
             return false;
         }

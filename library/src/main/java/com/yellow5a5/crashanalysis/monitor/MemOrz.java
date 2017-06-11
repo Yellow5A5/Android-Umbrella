@@ -20,7 +20,6 @@ public class MemOrz extends IOrz {
         final long freeMemInMB = runtime.freeMemory() / 1048576L;
         final long maxHeapSizeInMB = runtime.maxMemory() / 1048576L;
         mData.getPercentList().push((float) (freeMemInMB * 100 / maxHeapSizeInMB));
-        Log.d(MemOrz.class.getName(), "update: " + freeMemInMB + " " + maxHeapSizeInMB);
         sHandler.post(new Runnable() {
             @Override
             public void run() {

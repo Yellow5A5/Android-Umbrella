@@ -29,7 +29,7 @@ public class CrashInfoDialog extends Dialog {
     public interface CrashDialogCallback {
         void onCloseBtnClick();
 
-        void onShareBtnClick();
+        void onUmbrellaActBtnClick();
 
         void onRestartBtnClick();
     }
@@ -70,7 +70,7 @@ public class CrashInfoDialog extends Dialog {
                     return;
                 }
                 if (v == mUmbreEnBtn) {
-                    mCrashDialogCallback.onShareBtnClick();
+                    mCrashDialogCallback.onUmbrellaActBtnClick();
                 } else if (v == mCloseV) {
                     mCrashDialogCallback.onCloseBtnClick();
                     dismiss();
