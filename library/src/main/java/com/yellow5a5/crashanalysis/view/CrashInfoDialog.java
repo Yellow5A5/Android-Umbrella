@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
@@ -24,6 +25,7 @@ public class CrashInfoDialog extends Dialog {
     private Button mLeftBtn;
     private Button mUmbreEnBtn;
     private ImageView mCloseV;
+    private LinearLayout mBottomLayout;
 
 
     public interface CrashDialogCallback {
@@ -63,10 +65,20 @@ public class CrashInfoDialog extends Dialog {
         mLeftBtn = (Button) view.findViewById(R.id.dialog_crash_restart_btn);
         mUmbreEnBtn = (Button) view.findViewById(R.id.dialog_crash_open_umbrella_btn);
         mCloseV = (ImageView) view.findViewById(R.id.dialog_crash_close_iv);
+        mBottomLayout = (LinearLayout) view.findViewById(R.id.dialog_crash_bottom_ll);
+
         if (Umbrella.getInstance().getCrashConfig().isOpenUmbrella()){
             mUmbreEnBtn.setVisibility(View.VISIBLE);
         } else {
             mUmbreEnBtn.setVisibility(View.GONE);
+        }
+        if (Umbrella.getInstance().getCrashConfig().isNeedRestartApp()){
+            mLeftBtn.setVisibility(View.VISIBLE);
+        } else {
+            mLeftBtn.setVisibility(View.GONE);
+        }
+        if (!mUmbreEnBtn.isShown() && !mLeftBtn.isShown()){
+            mBottomLayout.setVisibility(View.GONE);
         }
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
