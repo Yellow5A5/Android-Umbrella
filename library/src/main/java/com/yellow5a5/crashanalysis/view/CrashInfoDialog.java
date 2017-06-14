@@ -77,9 +77,11 @@ public class CrashInfoDialog extends Dialog {
         } else {
             mLeftBtn.setVisibility(View.GONE);
         }
-        if (!mUmbreEnBtn.isShown() && !mLeftBtn.isShown()){
+
+        if (!Umbrella.getInstance().getCrashConfig().isOpenUmbrella() && !Umbrella.getInstance().getCrashConfig().isNeedRestartApp()){
             mBottomLayout.setVisibility(View.GONE);
         }
+
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
