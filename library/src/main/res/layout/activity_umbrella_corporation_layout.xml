@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_umbrella_corporation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.yellow5a5.crashanalysis.activity.UmbrellaCorporationActivity">
 
+    <LinearLayout
+        android:id="@+id/activity_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:background="#ffffff"
+        android:orientation="horizontal">
 
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:layout_above="@+id/umbrella_bottom_bar"-->
-        <!--android:id="@+id/monitor_detail_container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="300dp" />-->
+        <ImageView
+            android:src="@drawable/activity_umbrella_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/umbrella_bottom_bar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="66dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:orientation="horizontal">-->
-        <!---->
-        <!---->
-    <!--</LinearLayout>-->
+        <TextView
+            android:gravity="center"
+            android:text=" Umbrella"
+            android:textColor="#333333"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/umbrella_viewpager_container"
+        android:layout_below="@id/activity_top_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="66dp">
     </android.support.v4.view.ViewPager>
+
+    <View
+        android:layout_below="@id/activity_top_bar"
+        android:background="#666666"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
 
     <LinearLayout
         android:layout_alignParentBottom="true"

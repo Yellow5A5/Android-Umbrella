@@ -1,27 +1,22 @@
 package com.yellow5a5.crashanalysis.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.yellow5a5.crashanalysis.R;
-import com.yellow5a5.crashanalysis.Umbrella;
 import com.yellow5a5.crashanalysis.core.CrashInfoHelper;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Created by Yellow5A5 on 17/4/25.
  */
 
-public class CrashDetailActivity extends AppCompatActivity {
+public class CrashDetailActivity extends Activity {
 
 
     private TextView logdetailexceptiontip;
@@ -87,20 +82,57 @@ public class CrashDetailActivity extends AppCompatActivity {
             return;
         }
         String exception = list.get(0);
-        String position = list.get(1).substring(0, list.get(1).indexOf("$"));
-        String methodLine = "(行数" + list.get(1).substring(list.get(1).indexOf(":"), list.get(1).length());
-        String method = list.get(1).replace(position,"");
-        method = method.substring(method.indexOf("."), method.indexOf("("));
-        position = (position + methodLine).replace("at ", "");
         logdetailexceptiontext.setText(exception);
+
+        if (list.size() <= 1){
+            return;
+        }
+        String classPosition = pullAwayClassPosition(list.get(1));
+        String method = pullAwayMethod(list.get(1));
+        logdetailclasstext.setText(classPosition);
         logdetailmethodtext.setText(method);
-        logdetailclasstext.setText(position);
         StringBuilder builder = new StringBuilder();
         for (String line : list) {
             builder.append(line);
             builder.append("\n");
         }
         logdetaillinetext.setText(builder);
+    }
 
+    private boolean isContainMethodSymbol(String ex){
+        if (!TextUtils.isEmpty(ex) && ex.contains("$")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private String pullAwayMethod(String ex){
+        if(isContainMethodSymbol(ex)){
+            String method = ex.substring(ex.indexOf("$"), ex.length());
+            if (method.contains(".") && method.contains("(")){
+                method = method.substring(method.indexOf("."), method.indexOf("("));
+                return method;
+            }
+        }
+        return "";
+    }
+
+    private String pullAwayClassPosition(String ex) {
+        String position = "";
+        if (isContainMethodSymbol(ex)) {
+            position = ex.substring(0, ex.indexOf("$"));
+        } else if(ex.contains("(")) {
+            position = ex.substring(0, ex.indexOf("("));
+        }
+        //移除at 前缀
+        if (position.startsWith("\tat ")){
+            position = position.replace("\tat ", "");
+        }
+        if (ex.contains(":")){
+            String methodLine = "(行数" + ex.substring(ex.indexOf(":"), ex.length());
+            position += methodLine;
+        }
+        return position;
     }
 }

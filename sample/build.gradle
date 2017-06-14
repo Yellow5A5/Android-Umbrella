@@ -34,4 +34,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.0'
     testCompile 'junit:junit:4.12'
     compile project(':library')
+//    compile 'com.github.Yellow5A5:Android-Umbrella:1.0.0'
 }

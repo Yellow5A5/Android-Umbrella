@@ -10,4 +10,5 @@ public class Constant {
     public static final int TYPE_FPS = 2;
     public static final int TYPE_MEMORY = 3;
     public static final int TYPE_NETWORK = 4;
+    public static final int TYPE_BATTERY = 4;
 }

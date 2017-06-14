@@ -14,31 +14,35 @@ public class DemoApp extends Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         Umbrella.getInstance()
                 .inject(this)
-                .openMonitor()
-                .openANRWatchDog(3000)
-                .setTargetToDefaultThread()
-                .setEncryptionMethod(new IEncryptionCallback() {
-                    @Override
-                    public String onEncryptionAlgorithm(String origin) {
-                        //加密方法
-                        return origin;
-                    }
-
-                    @Override
-                    public String onDecryptionAalgorithm(String cipher) {
-                        //解密方法
-                        return cipher;
-                    }
-                });
-        Umbrella.getInstance().setCustomCrashListener(new CrashListener() {
-            @Override
-            public void onCrash() {
-                //TODO...
-            }
-        });
+//                .openMonitor()
+                .setTargetToDefaultThread();
+//        super.onCreate();
+//        Umbrella.getInstance()
+//                .inject(this)
+//                .openMonitor()
+//                .openANRWatchDog(3000)
+//                .setTargetToDefaultThread()
+//                .setEncryptionMethod(new IEncryptionCallback() {
+//                    @Override
+//                    public String onEncryptionAlgorithm(String origin) {
+//                        //加密方法
+//                        return origin;
+//                    }
+//
+//                    @Override
+//                    public String onDecryptionAalgorithm(String cipher) {
+//                        //解密方法
+//                        return cipher;
+//                    }
+//                });
+//        Umbrella.getInstance().setCustomCrashListener(new CrashListener() {
+//            @Override
+//            public void onCrash() {
+//                //TODO...
+//            }
+//        });
 
 //        CustomActivityOnCrash.install(this);
 

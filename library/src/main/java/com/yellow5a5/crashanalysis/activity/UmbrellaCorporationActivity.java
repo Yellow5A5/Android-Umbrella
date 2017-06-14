@@ -1,9 +1,10 @@
 package com.yellow5a5.crashanalysis.activity;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,7 +15,7 @@ import com.yellow5a5.crashanalysis.fragment.LogCenterFragment;
 
 import java.util.ArrayList;
 
-public class UmbrellaCorporationActivity extends AppCompatActivity {
+public class UmbrellaCorporationActivity extends FragmentActivity {
 
     private LinearLayout mCrashLogLl;
     private LinearLayout mSettingLl;

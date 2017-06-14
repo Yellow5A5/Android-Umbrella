@@ -41,12 +41,17 @@ public class CrashInfoDialog extends Dialog {
     }
 
     private CrashInfoDialog(Context context) {
-        super(context);
+        this(context, 0);
+    }
+
+    public CrashInfoDialog(Context context, int themeResId){
+        super(context, themeResId);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
     }
@@ -137,7 +142,7 @@ public class CrashInfoDialog extends Dialog {
         }
 
         public CrashInfoDialog build() {
-            dialog = new CrashInfoDialog(context);
+            dialog = new CrashInfoDialog(context, R.style.CrashDialogTheme);
             dialog.setCanceledOnTouchOutside(false);
             setupView();
             return dialog;
