@@ -3,8 +3,6 @@ package com.yellow5a5.sample;
 import android.app.Application;
 
 import com.yellow5a5.crashanalysis.Umbrella;
-import com.yellow5a5.crashanalysis.core.CrashListener;
-import com.yellow5a5.crashanalysis.core.IEncryptionCallback;
 
 /**
  * Created by Yellow5A5 on 17/4/17.
@@ -14,9 +12,11 @@ public class DemoApp extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
         Umbrella.getInstance()
                 .inject(this)
-//                .openMonitor()
+                .openMonitor()
+                .openANRWatchDog(3000)
                 .setTargetToDefaultThread();
 //        super.onCreate();
 //        Umbrella.getInstance()

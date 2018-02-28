@@ -9,10 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.yellow5a5.crashanalysis.activity.UmbrellaCorporationActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button mBtn1;
     private Button mBtn2;
+    private Button mBtn3;
 
     private int flag;
 
@@ -22,18 +25,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mBtn1 = (Button) findViewById(R.id.demo_btn1);
         mBtn2 = (Button) findViewById(R.id.demo_btn2);
+        mBtn3 = (Button) findViewById(R.id.demo_btn3);
 
         Log.e(MainActivity.class.getName(), "onCreate: MainActivity");
         initListener();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                new Handler().postDelayed(this, 2000);
-                Toast.makeText(MainActivity.this, flag++ + "", Toast.LENGTH_SHORT).show();
-//                throw new ArrayIndexOutOfBoundsException();
-            }
-        }, 2000);
     }
 
     private void initListener() {
@@ -54,8 +50,19 @@ public class MainActivity extends AppCompatActivity {
         mBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(MainActivity.class.getName(), "Click: ");
-                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        mBtn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, UmbrellaCorporationActivity.class);
                 startActivity(intent);
             }
         });

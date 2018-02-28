@@ -25,7 +25,13 @@
 
     <Button
         android:id="@+id/demo_btn2"
-        android:text="Crash_Button"
+        android:text="ANR Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/demo_btn3"
+        android:text="LocalLog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
